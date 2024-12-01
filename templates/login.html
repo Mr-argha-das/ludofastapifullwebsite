@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Glassmorphism Login Form in Tailwind CSS</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link
+      href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;500;600&display=swap"
+      rel="stylesheet"
+    />
+    <script>
+      tailwind.config = {
+        theme: {
+          extend: {
+            fontFamily: {
+              poppins: ["Poppins", "sans-serif"],
+            },
+          },
+        },
+      };
+    </script>
+    <script>
+      tailwind.config = {
+        theme: {
+          extend: {
+            backgroundImage: {
+              "custom-image": "url('../static/ludoBG.jpg')",
+            },
+          },
+        },
+      };
+    </script>
+  </head>
+  <body class="bg-black font-poppins text-white lg:w-[500px] w-full mx-auto">
+    <div
+      class="bg-custom-image bg-cover bg-center h-full min-h-screen flex items-center justify-center"
+    >
+      <form
+        id="loginForm"
+        class="relative bg-white/10 backdrop-blur-2xl border border-white rounded-lg shadow-lg p-8 w-full max-w-3xl mx-6"
+      >
+        <h3 class="text-center text-6xl font-bold mb-6">Login</h3>
+        <div class="mb-4">
+          <label for="phone" class="block text-3xl font-medium mb-2"
+            >Phone</label
+          >
+          <input
+            type="number"
+            id="phone"
+            placeholder="Enter Phone Number"
+            class="w-full bg-white text-black rounded-lg py-6 px-6 text-2xl border focus:outline-none focus:ring-2 focus:ring-blue-500"
+          />
+        </div>
+        <div class="mt-6">
+          <button
+            type="submit"
+            class="w-full bg-white text-black font-semibold py-5 text-2xl rounded-lg hover:bg-gray-300 transition"
+          >
+            Submit
+          </button>
+          <p class="text-center text-2xl font-medium mt-4">
+            By continuing, I agree that Ludo may store and process my data in
+            accordance with the
+            <a
+              href="#"
+              class="text-green-400 underline hover:text-green-500 transition"
+            >
+              Privacy Policy
+            </a>
+          </p>
+        </div>
+      </form>
+    </div>
+    <script>
+      document
+        .getElementById("loginForm")
+        .addEventListener("submit", async function (event) {
+          event.preventDefault(); // Prevent the form from submitting in the default way
+
+          const phone = document.getElementById("phone").value;
+
+          try {
+            const response = await fetch("/send-otp/", {
+              method: "POST",
+              headers: {
+                "Content-Type": "application/json",
+              },
+              body: JSON.stringify({ phone_number : phone }),
+            });
+
+            const data = await response.json();
+            
+              // Store user data (e.g., in localStorage or sessionStorage)
+              
+              alert("Otp Sent");
+              window.location.href = "/verfyotp";
+              console.log("hey");
+          } catch (error) {
+            console.error("Error logging in:", error);
+          }
+        });
+    </script>
+  </body>
+</html>

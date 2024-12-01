@@ -1,0 +1,146 @@
+import json
+from bson import ObjectId
+from fastapi import APIRouter, WebSocket, WebSocketDisconnect
+from fastapi.templating import Jinja2Templates
+from fastapi.responses import HTMLResponse
+from starlette.requests import Request
+from fastapi.staticfiles import StaticFiles
+from wallet.wallet_model import WalletModel, WalletTable
+from login.model.login_model import LoginBody, LoginTable
+import random
+from typing import List
+
+router = APIRouter()
+templates = Jinja2Templates(directory="templates")
+@router.get("/4player")
+async def player4(request: Request):
+    return templates.TemplateResponse('4player.html', {"request": request})
+
+connected_users = []
+
+# Class to handle individual WebSocket connection
+class ConnectionManager:
+    def __init__(self):
+        self.active_connections: list = []
+
+    async def connect(self, websocket: WebSocket, userid: str):
+        await websocket.accept()
+        self.active_connections.append({"websocket": websocket, "userid": userid})
+
+    def disconnect(self, websocket: WebSocket):
+        for connection in self.active_connections:
+            if connection['websocket'] == websocket:
+                self.active_connections.remove(connection)
+                break
+
+    async def send_message(self, websocket: WebSocket, message: str):
+        await websocket.send_text(message)
+    async def send_json(self, websocket: WebSocket, data: dict):
+        await websocket.send_json(data)
+
+    async def broadcast(self, message: str):
+        for connection in self.active_connections:
+            await connection["websocket"].send_text(message)
+
+manager = ConnectionManager()
+
+
+connected_users_by_game = {}  
+user_opponent_map = {}
+@router.websocket("/find-opponent/{userid}/{priceid}")
+async def websocket_endpoint(websocket: WebSocket, userid: str, priceid: str):
+    userdata = LoginTable.objects.get(id=ObjectId(userid))
+    await manager.connect(websocket, userid)
+
+    if priceid not in connected_users_by_game:
+        connected_users_by_game[priceid] = []
+
+    connected_users_by_game[priceid].append({"userid": userid, "websocket": websocket})
+   
+   
+
+    try:
+        # Check if there is another user waiting with the same game ID
+        if len(connected_users_by_game[priceid]) >= 2:
+            # Randomly pick another user
+            other_user = random.choice([user for user in connected_users_by_game[priceid] if user["userid"] != userid])
+            values = ["P1", "P2"]
+            value_a, value_b = random.sample(values, 2)
+
+            # Notify both users about the connection
+            opp = LoginTable.objects.get(id=ObjectId(str(other_user["userid"])))
+            opponent_json = json.loads(opp.to_json())
+
+            user_data = {
+                "message": "Connected with opponent",
+                "opponent": other_user["userid"],
+                "your_player": value_a,
+                "opponent_data": opponent_json,
+                "enimidata": None
+            }
+
+            userdata_json = json.loads(userdata.to_json())
+
+            opponent_data = {
+                "message": "Connected with opponent",
+                "opponent": userid,
+                "your_player": value_b,
+                "opponent_data": userdata_json,
+            }
+
+            # Send JSON response to both users
+            await manager.send_json(websocket, user_data)
+            await manager.send_json(other_user["websocket"], opponent_data)
+
+            # Store opponent's websocket for both users
+            user_opponent_map[userid] = other_user["websocket"]
+            user_opponent_map[other_user["userid"]] = websocket
+
+            # Remove paired users from the game pool
+            connected_users_by_game[priceid] = [
+                user for user in connected_users_by_game[priceid]
+                if user["userid"] not in [userid, other_user["userid"]]
+            ]
+
+            print(f"Users {userid} and {other_user['userid']} paired successfully.")
+
+        else:
+            print(f"Waiting for another player for user {userid}")
+
+        while True:
+            # Wait for data from the user
+            print(user_opponent_map)
+            data = await websocket.receive_json()
+            print(f"Received JSON data from {userid}: {data}")
+
+            # Forward the data to the opponent if they exist in the map
+            if userid in user_opponent_map:
+                opponent_ws = user_opponent_map[userid]
+                if opponent_ws:  # Ensure the opponent WebSocket exists
+                    response = {
+                        "message": "game data",
+                        "from": userid,
+                        "data_received": data
+                    }
+                    print(f"Sending data from {userid} to opponent.")
+                    await manager.send_json(opponent_ws, response)
+                else:
+                    print(f"Opponent WebSocket not found for {userid}")
+            else:
+                print(f"No opponent found for {userid}")
+
+    except WebSocketDisconnect:
+        print(f"User {userid} disconnected.")
+        # Clean up user's connection from the game pool
+        connected_users_by_game[priceid] = [
+            user for user in connected_users_by_game[priceid]
+            if user["userid"] != userid
+        ]
+        await manager.disconnect(websocket)
+        
+        # Remove from opponent map
+        if userid in user_opponent_map:
+            opponent_ws = user_opponent_map.pop(userid, None)
+            if opponent_ws:
+                print(f"Opponent disconnected for {userid}")
+                await manager.disconnect(opponent_ws)

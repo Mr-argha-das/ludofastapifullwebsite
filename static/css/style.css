@@ -1,0 +1,185 @@
+/* styles.css */
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+/* General Reset */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: Arial, sans-serif;
+  color: #333;
+  background-color: #000;
+}
+
+/* .container {
+  width: 90%;
+  max-width: 1200px;
+  margin: 0 auto;
+} */
+
+.hamburger {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  width: 30px; /* Width of the icon */
+  height: 25px; /* Height of the icon */
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  padding: 0;
+}
+
+/* Style for the individual bars */
+.hamburger div {
+  width: 100%; /* Full width of the button */
+  height: 3px; /* Thickness of each bar */
+  background-color: #fff; /* Color of the bars */
+  border-radius: 10px;
+  transition: transform 0.3s ease, opacity 0.3s ease; /* Smooth transitions */
+}
+.close-btn {
+  position: fixed;
+  top: 20px;
+  right: 20px;
+  background-color: transparent;
+  border: none;
+  cursor: pointer;
+  font-size: 24px;
+  color: #fff;
+  z-index: 999; /* Ensure it is above other content */
+  padding: 10px;
+}
+
+/* Styling for the "X" icon */
+.close-btn:before {
+  content: "×"; /* Unicode character for "X" */
+  font-size: 30px;
+  font-weight: bold;
+}
+
+/* Optional: Hover effect for the button */
+.close-btn:hover {
+  color: #f00; /* Change color when hovering */
+}
+/* Header */
+.transition-transform {
+  transition: transform 0.3s ease;
+}
+header {
+  background-color: rgba(0, 0, 0, 0.5);
+  color: #fff;
+  padding: 20px 0;
+}
+
+header .logo {
+  font-size: 24px;
+  font-weight: bold;
+}
+
+header nav ul {
+  display: flex;
+  list-style: none;
+}
+
+header nav ul li {
+  margin-left: 20px;
+}
+
+header nav ul li a {
+  color: #fff;
+  text-decoration: none;
+}
+
+/* Hero Section */
+
+.hero {
+  background-image: url("https://www.pngwing.com/en/free-png-zxkai");
+  background-size: cover;
+  background-position: center;
+  color: #fff;
+
+  padding: 100px 20px;
+}
+
+.hero-content h2 {
+  font-size: 48px;
+  margin-bottom: 20px;
+}
+
+.hero-content p {
+  font-size: 20px;
+  margin-bottom: 40px;
+}
+
+.cta-btn {
+  background-color: #ff4d4d;
+  color: #fff;
+  padding: 10px 30px;
+  border-radius: 25px;
+  text-decoration: none;
+  font-weight: bold;
+}
+
+/* Features Section */
+.features {
+  text-align: center;
+  padding: 50px 20px;
+}
+
+.features h3 {
+  font-size: 32px;
+  margin-bottom: 20px;
+}
+
+.features-container {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  margin-top: 30px;
+}
+
+.feature {
+  width: 45%;
+  margin-bottom: 20px;
+  border: 1px solid white;
+}
+
+.feature h4 {
+  font-size: 24px;
+  margin-bottom: 10px;
+}
+
+.feature p {
+  font-size: 16px;
+}
+
+/* Call to Action Section */
+.cta {
+  background-color: #ff4d4d;
+  color: #fff;
+  text-align: center;
+  padding: 50px 20px;
+}
+
+.cta h2 {
+  font-size: 36px;
+  margin-bottom: 20px;
+}
+
+.cta p {
+  font-size: 18px;
+  margin-bottom: 30px;
+}
+
+/* Footer */
+footer {
+  text-align: center;
+  padding: 20px;
+  background-color: #333;
+  color: #fff;
+}
+

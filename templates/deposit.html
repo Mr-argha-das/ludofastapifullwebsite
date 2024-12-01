@@ -1,0 +1,222 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GST Calculator</title>
+    <script>
+        // Function to calculate GST
+        function calculateGST() {
+            var amount = parseFloat(document.getElementById('amount').value);
+            if (!isNaN(amount) && amount > 0) {
+                var gst = amount * 0.18;
+                gst = amount+gst;
+                document.getElementById('gstAmount').innerText = "GST (18%): ₹" + gst.toFixed(2);
+            } else {
+                document.getElementById('gstAmount').innerText = "Please enter a valid amount.";
+            }
+        }
+    </script>
+    <style>
+        * {
+            padding: 0;
+            margin: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            background-color: #080710;
+            font-family: "Poppins", sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+
+        .background {
+            width: 430px;
+            height: 520px;
+            position: absolute;
+            transform: translate(-50%, -50%);
+            left: 50%;
+            top: 50%;
+        }
+
+        .background .shape {
+            height: 200px;
+            width: 200px;
+            position: absolute;
+            border-radius: 50%;
+        }
+
+        .shape:first-child {
+            background: linear-gradient(#1845ad, #23a2f6);
+            left: -80px;
+            top: -80px;
+        }
+
+        .shape:last-child {
+            background: linear-gradient(to right, #ff512f, #f09819);
+            right: -30px;
+            bottom: -80px;
+        }
+
+        form {
+            height: 550px;
+            width: 400px;
+            background-color: rgba(255, 255, 255, 0.13);
+            position: absolute;
+            transform: translate(-50%, -50%);
+            top: 50%;
+            left: 50%;
+            border-radius: 10px;
+            backdrop-filter: blur(10px);
+            border: 2px solid rgba(255, 255, 255, 0.1);
+            box-shadow: 0 0 40px rgba(8, 7, 16, 0.6);
+            padding: 50px 35px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+        }
+
+        form h3 {
+            font-size: 32px;
+            font-weight: 500;
+            line-height: 42px;
+            text-align: center;
+            color: white;
+        }
+
+        label {
+            display: block;
+            margin-top: 30px;
+            font-size: 16px;
+            font-weight: 500;
+            color: #e5e5e5;
+        }
+
+        input {
+            display: block;
+            height: 50px;
+            width: 100%;
+            background-color: rgba(255, 255, 255, 0.07);
+            border-radius: 3px;
+            padding: 0 10px;
+            margin-top: 8px;
+            font-size: 14px;
+            color: white;
+            font-weight: 300;
+        }
+
+        ::placeholder {
+            color: #e5e5e5;
+        }
+
+        button {
+            margin-top: 50px;
+            width: 100%;
+            background-color: #ffffff;
+            color: #080710;
+            padding: 15px 0;
+            font-size: 18px;
+            font-weight: 600;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        .social {
+            margin-top: 30px;
+            width: 100%;
+        }
+
+        .social div {
+            width: 100%;
+            border-radius: 3px;
+            padding: 5px 10px 10px 5px;
+            background-color: rgba(255, 255, 255, 0.27);
+            color: #eaf0fb;
+            text-align: center;
+        }
+
+        .social div:hover {
+            background-color: rgba(255, 255, 255, 0.47);
+        }
+
+        .GoTo {
+            margin-top: 15px;
+            display: flex;
+            gap: 5px;
+            color: white;
+        }
+
+        .GoTo a {
+            text-decoration: none;
+            color: #f09819;
+        }
+
+        /* Responsive Design */
+        @media screen and (max-width: 768px) {
+            .background {
+                width: 300px;
+                height: 400px;
+            }
+            .background .shape:first-child {
+                left: -50px;
+                top: -50px;
+            }
+            .background .shape:last-child {
+                right: -20px;
+                bottom: -50px;
+            }
+            form {
+                width: 90%;
+                height: auto;
+                padding: 40px 25px;
+            }
+        }
+
+        @media screen and (max-width: 480px) {
+            .background {
+                width: 250px;
+                height: 350px;
+            }
+            .background .shape:first-child {
+                left: -40px;
+                top: -40px;
+            }
+            .background .shape:last-child {
+                right: -10px;
+                bottom: -40px;
+            }
+            form {
+                width: 90%;
+                height: auto;
+                padding: 30px 15px;
+            }
+            form h3 {
+                font-size: 24px;
+            }
+        }
+    </style>
+</head>
+<body>
+
+<div class="background">
+    <div class="shape"></div>
+    <div class="shape"></div>
+</div>
+
+<form action="/api/v1/deposit-amount" method="POST">
+    <h3>Deposit</h3>
+
+    <label for="amount">Amount:</label>
+    <input type="number" id="amount" name="amount" required placeholder="Enter Amount" oninput="calculateGST()">
+
+   
+    
+    <button type="submit">Submit</button>
+</form>
+
+</body>
+</html>

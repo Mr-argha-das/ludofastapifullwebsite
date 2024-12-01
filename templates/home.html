@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Ludo Game | Homepage</title>
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css"
+    />
+
+    <link
+      href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap"
+      rel="stylesheet"
+    />
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+
+      body {
+        max-width: 500px;
+
+        font-family: "Poppins", sans-serif;
+        padding-top: 120px;
+        background-color: #080710;
+        height: 100vh;
+        display: flex;
+      }
+
+      .head {
+        background: rgba(255, 255, 255, 0.15);
+        backdrop-filter: blur(10px);
+        border-radius: 20px;
+        box-shadow: 0 8px 32px rgba(59, 59, 59, 0.37);
+        text-align: center;
+        color: #fff;
+      }
+
+      .HomeCon {
+        display: flex;
+        flex-direction: column;
+        padding: 30px;
+        background: rgba(255, 255, 255, 0.15);
+        backdrop-filter: blur(10px);
+        border-radius: 20px;
+        box-shadow: 0 8px 32px rgba(31, 38, 135, 0.37);
+        text-align: center;
+        color: #fff;
+      }
+
+      .container h1 {
+        font-size: 2.5rem;
+        margin-bottom: 1rem;
+        font-weight: 600;
+      }
+
+      .tab-container {
+        display: flex;
+        justify-content: space-between;
+        margin-top: 2rem;
+      }
+
+      .tab {
+        width: 140px;
+        height: 140px;
+        background: linear-gradient(to right, #ff512f, #dd2476);
+        border-radius: 20px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 1.2rem;
+        font-weight: 600;
+        transition: all 0.3s ease;
+        cursor: pointer;
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+      }
+
+      .tab:hover {
+        transform: scale(1.05);
+        background: linear-gradient(to right, #56ab2f, #a8e063);
+      }
+
+      .tab-2player {
+        background: linear-gradient(to right, #1e3c72, #2a5298);
+      }
+
+      .tab-4player {
+        background: linear-gradient(to right, #ff512f, #f09819);
+      }
+
+      .tab p {
+        color: white;
+        font-size: 1.2rem;
+      }
+
+      .footer {
+        font-size: 0.9rem;
+      }
+
+      .footer a {
+        color: #f09819;
+        text-decoration: none;
+      }
+    </style>
+  </head>
+  <body class="max-w-[500px] mx-auto px-4">
+    <div class="container mx-auto">
+      <header
+        class="absolute top-0 max-w-[500px] mx-auto left-0 right-0 backdrop-blur-lg text-white p-3"
+      >
+        <div
+          class="container px-5 w-full head mx-auto flex h-20 justify-between items-center"
+        >
+          <!-- Logo on the left -->
+          <div class="text-2xl font-bold">
+            <a href="/" class="text-white hover:text-gray-300">Logo</a>
+          </div>
+
+          <!-- Navigation links on the right -->
+          <nav class="space-x-6">
+            <a href="/passbook" class="hover:text-gray-300">Passbook</a>
+            <a href="/deposit" class="hover:text-gray-300">Deposit</a>
+            <a href="/profile" class="hover:text-gray-300">Profile</a>
+            <a href="/logout" class="hover:text-gray-300">Logout</a>
+          </nav>
+        </div>
+      </header>
+
+      <div class="flex justify-between items-center mb-5">
+        <div
+          class="head max-w-[250px] flex px-6 justify-between py-6 gap-10 items-cente"
+        >
+          <i class="fas fa-wallet text-6xl text-blue-500"></i>
+          <div>
+            <p>{{wallet.balance}}</p>
+            <p class="text-blue-500">Balance</p>
+          </div>
+        </div>
+        <div
+          class="head max-w-[280px] flex px-6 justify-between py-6 gap-10 items-cente"
+        >
+          <i class="fas fa-money-bill-wave text-6xl text-green-500"></i>
+          <div>
+            <p>{{wallet.totalWithdrawal}}</p>
+            <p class="text-blue-500">withdrawl</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="flex items-center justify-center">
+        <div class="HomeCon w-full">
+          <h1>Games</h1>
+
+          <div class="grid grid-cols-2 gap-3">
+            <!-- Tab for 2 Players -->
+             {% for item in category %}
+            <a href="/price/{{item['_id']['\u0024oid']}}"
+              class=" flex place-items-center justify-center rounded-lg text-lg font-bold"
+              
+            >
+             <img class="w-full h-full" src="{{ item.image }}"/>
+          </a>
+             {% endfor %}
+
+            
+          </div>
+        </div>
+      </div>
+      <div class="HomeCon w-full mt-6">
+        <div class="footer flex justify-center">
+          <p>&copy; 2024 Ludo Game. <a href="#">Privacy Policy</a></p>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>
