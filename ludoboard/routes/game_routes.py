@@ -1,3 +1,4 @@
+from datetime import datetime
 import json
 from bson import ObjectId
 from fastapi import APIRouter, WebSocket, WebSocketDisconnect
@@ -5,6 +6,8 @@ from fastapi.templating import Jinja2Templates
 from fastapi.responses import HTMLResponse
 from starlette.requests import Request
 from fastapi.staticfiles import StaticFiles
+from categoryy.model.sub_category import SubCategoryTable
+from passbook.models.passbook_model import PassbookTable
 from wallet.wallet_model import WalletModel, WalletTable
 from login.model.login_model import LoginBody, LoginTable
 import random
@@ -144,3 +147,35 @@ async def websocket_endpoint(websocket: WebSocket, userid: str, priceid: str):
             if opponent_ws:
                 print(f"Opponent disconnected for {userid}")
                 await manager.disconnect(opponent_ws)
+
+
+def calculate_percentage(amount, percentage):
+    return (amount * percentage) / 100
+
+@router.post("/api/post-winer")
+async def postWiner(winerId: str, loserId: str, price: str):
+    winerData = WalletTable.objects.get(userid=winerId)
+    loserData = WalletTable.objects.get(userid=loserId)
+    priceList = SubCategoryTable.objects.get(id=ObjectId(price))
+    priceammount = priceList.price
+    grandTotal = priceammount+priceammount
+    serviceammount = calculate_percentage(grandTotal, 8)
+    winerAmmount = grandTotal - serviceammount
+    winerData.balance = winerData.balance + winerAmmount
+    winerData.save()
+    loserData.balance = loserData.balance - priceammount
+    loserData.save()
+    winerUSER = LoginTable.objects.get(id=ObjectId(winerId))
+    loserUSER = LoginTable.objects.get(id=ObjectId(loserId))
+    current_datetime = datetime.now()
+    formatted_datetime = current_datetime.strftime("%Y-%m-%d %H:%M:%S")
+    winer = PassbookTable(userid=winerId, title=f"you win a match agganest {loserUSER.name}", amount = f"(+) {winerAmmount}", cre_date=f"{formatted_datetime}")
+    winer.save()
+    loser = PassbookTable(userid=winerId, title=f"you lose a mach agganest {winerUSER.name}", amount = f"(-) {priceammount}", cre_date=f"{formatted_datetime}")
+    loser.save()
+    return {
+        "message": "balance update",
+        "status": True
+    }
+
+

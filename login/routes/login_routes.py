@@ -113,7 +113,17 @@ async def login_user(request: Request, body: LoginBodyLogin):
                 "status": False
             }
 
-
+@router.get("/api/user/{userid}")
+async def getUserData(userid: str):
+    findata = LoginTable.objects.get(id=ObjectId(userid))
+    tojson = findata.to_json()
+    fromjson = json.loads(tojson)
+    return {
+        "message": "here is user details",
+        "data": fromjson,
+        "status": True
+        
+    }
 
 
 

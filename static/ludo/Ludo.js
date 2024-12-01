@@ -12,7 +12,8 @@ export class Ludo {
     };
 
     yourPlayer = '';  // To store the player role (P1 or P2)
-    opponentValue = {}
+    opponentValue = {};
+    opponentDATA = {};
     _diceValue;
     get diceValue() {
         return this._diceValue;
@@ -200,6 +201,12 @@ export class Ludo {
                 if (this.hasPlayerWon(player)) {
                     //// put here winere api
                     alert(`Player: ${player} has won!`);
+                    if(this.yourPlayer === player){
+                        /// i win 
+                        // this.sendWiningDAta()
+                    }else{
+                        
+                    }
                     this.resetGame();
                     return;
                 }
@@ -324,6 +331,7 @@ export class Ludo {
             
             if(data.message === "Connected with opponent"){
                 this.yourPlayer = data.your_player;
+                this.opponentDATA = data.opponent_data;
             }
         };  
 
@@ -390,4 +398,22 @@ export class Ludo {
         }
         
     }
+    sendWiningDAta(whowin, wholose) {
+        console.log("data sensd");
+        const dataToSend = {
+            message: 'Who win',
+            whowin: whowin,
+            wholose: wholose
+        };
+        console.log("Sended data");
+        console.log(dataToSend);
+        try {
+            this.socket.send(JSON.stringify(dataToSend));
+            console.log("done");
+        } catch (e){
+            console.log(e);
+        }
+        
+    }
 }
+
