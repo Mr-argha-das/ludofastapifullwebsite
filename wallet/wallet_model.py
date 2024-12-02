@@ -10,4 +10,4 @@ class WalletTable(Document):
 class WalletModel(BaseModel):
     userid : str
     balance : int
-    totalWithdrawal : int
+    totalWithdrawal : int 

@@ -140,7 +140,7 @@ async def send_otp(request: Request, body: OTPRequest):
     # Save OTP temporarily
     otp_storage[phone_number] = otp
     account_sid = 'AC68d3bdc009b153d3e6c29eaa029799a6'
-    auth_token = '9dd8e039e41cd8b8d205b5e0d0ec257a'
+    auth_token = '266d86bf3d73ce0de8b3121a01307f3a'
     client = Client(account_sid, auth_token)
 
     message = client.messages.create(

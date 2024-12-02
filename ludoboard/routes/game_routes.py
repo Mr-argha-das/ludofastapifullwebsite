@@ -178,4 +178,19 @@ async def postWiner(winerId: str, loserId: str, price: str):
         "status": True
     }
 
-
+# when user click on the play button then check her balanece
+@router.get("/api/check-user-wallet/{priceid}")
+async def checkUserBalacnce(request: Request, priceid: str):
+    user= request.session.get("user")
+    findWallet = WalletTable.objects.get(userid=str(user["data"]["_id"]["\u0024oid"]))
+    gamePrice = SubCategoryTable.objects.get(id=ObjectId(priceid))
+    if(findWallet.balance > gamePrice.price):
+        return {
+            "message": "you have balance to play game",
+            "status": True
+        } 
+    else:
+        return {
+            "message": "You dont have balance to play",
+            "status":False
+        }
