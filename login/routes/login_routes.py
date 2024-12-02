@@ -196,3 +196,9 @@ async def verify_otp(request: Request, body: OTPVerifyRequest):
                 "data": None,
                 "status": False
             }
+
+@router.get("/api/logout")
+async def logout(request: Request):
+    # Clear the session
+    request.session.clear()
+    return RedirectResponse(url="/")
