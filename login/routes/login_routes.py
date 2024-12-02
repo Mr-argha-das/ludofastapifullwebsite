@@ -12,15 +12,11 @@ from starlette.middleware.sessions import SessionMiddleware
 
 from wallet.wallet_model import WalletModel, WalletTable
 from bson import ObjectId
-import firebase_admin
-from firebase_admin import credentials, auth
-from firebase_admin import auth
+
 import random
-import pyotp 
 from twilio.rest import Client
 # Initialize Firebase Admin SDK with the service account credentials
-cred = credentials.Certificate("firebase/ludo-754ab-firebase-adminsdk-7oyeb-8a6bb24a75.json")
-firebase_admin.initialize_app(cred)
+
 
 
 
