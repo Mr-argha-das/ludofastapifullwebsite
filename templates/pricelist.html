@@ -26,15 +26,12 @@
   </head>
 
   <body class="max-w-[500px] mx-auto bg-black text-white py-7">
-
-
     <div class="1 Token">
       <h1 class="uppercase text-center text-3xl font-bold HomeCon">
         1 Token Mode
       </h1>
       {% for item in items %}
       <div class="flex flex-col items-start HomeCon py-0 px-0 mt-8">
-        
         <div
           class="flex bg-[#444] text-lg font-semibold py-3 px-6 rounded-t-2xl w-full"
         >
@@ -45,17 +42,20 @@
         >
           <div class="flex gap-6">
             <div>
-              <p class="text-yellow-600"> 
+              <p class="text-yellow-600">
                 <i class="fas fa-trophy text-2xl"></i>
               </p>
             </div>
             <p class="text-lg font-bold text-green-600">{{item.price}}</p>
           </div>
-          <a href="/game/?userid={{userid}}&priceid={{item['_id']['\u0024oid']}}" class="bg-red-500 px-4 py-1 rounded">Play</a>
+          <a
+            href="/game/?userid={{userid}}&priceid={{item['_id']['\u0024oid']}}"
+            class="bg-red-500 px-4 py-1 rounded"
+            >Play</a
+          >
         </div>
       </div>
       {% endfor %}
     </div>
   </body>
-
 </html>

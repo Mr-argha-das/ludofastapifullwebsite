@@ -14,6 +14,17 @@
       rel="stylesheet"
     />
     <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+      tailwind.config = {
+        theme: {
+          extend: {
+            backgroundImage: {
+              "custom-image": "url('../static/ludoBG.jpg')",
+            },
+          },
+        },
+      };
+    </script>
     <style>
       * {
         margin: 0;
@@ -25,7 +36,7 @@
         max-width: 500px;
 
         font-family: "Poppins", sans-serif;
-        padding-top: 120px;
+
         background-color: #080710;
         height: 100vh;
         display: flex;
@@ -43,7 +54,6 @@
       .HomeCon {
         display: flex;
         flex-direction: column;
-        padding: 30px;
         background: rgba(255, 255, 255, 0.15);
         backdrop-filter: blur(10px);
         border-radius: 20px;
@@ -107,72 +117,64 @@
       }
     </style>
   </head>
-  <body class="max-w-[500px] mx-auto px-4">
-    <div class="container mx-auto">
-      <header
-        class="absolute top-0 max-w-[500px] mx-auto left-0 right-0 backdrop-blur-lg text-white p-3"
-      >
-        <div
-          class="container px-5 w-full head mx-auto flex h-20 justify-between items-center"
-        >
-          <!-- Logo on the left -->
-          <div class="text-2xl font-bold">
-            <a href="/" class="text-white hover:text-gray-300">Logo</a>
+  <body class="bg-black font-poppins text-white lg:w-[500px] w-full mx-auto">
+    <div class="bg-custom-image bg-cover bg-center h-screen container mx-auto">
+      <div class="backdrop-blur-lg h-full">
+        <header class="p-4">
+          <div
+            class="container px-5 w-full head mx-auto flex h-20 justify-between items-center"
+          >
+            <div class="text-2xl font-bold">
+              <a href="/" class="text-white hover:text-gray-300">Logo</a>
+            </div>
+            <nav class="space-x-6">
+              <a href="/passbook" class="hover:text-gray-300">Passbook</a>
+              <a href="/deposit" class="hover:text-gray-300">Deposit</a>
+              <a href="/profile" class="hover:text-gray-300">Profile</a>
+              <a href="/logout" class="hover:text-gray-300">Logout</a>
+            </nav>
           </div>
-
-          <!-- Navigation links on the right -->
-          <nav class="space-x-6">
-            <a href="/passbook" class="hover:text-gray-300">Passbook</a>
-            <a href="/deposit" class="hover:text-gray-300">Deposit</a>
-            <a href="/profile" class="hover:text-gray-300">Profile</a>
-            <a href="/logout" class="hover:text-gray-300">Logout</a>
-          </nav>
-        </div>
-      </header>
-
-      <div class="flex justify-between items-center mb-5">
-        <div
-          class="head max-w-[250px] flex px-6 justify-between py-6 gap-10 items-cente"
-        >
-          <i class="fas fa-wallet text-6xl text-blue-500"></i>
-          <div>
-            <p>{{wallet.balance}}</p>
-            <p class="text-blue-500">Balance</p>
+        </header>
+        <div class="flex justify-between items-center mb-3 py-2 px-4">
+          <div class="head max-w-[250px] flex justify-end p-4 gap-4">
+            <i class="fas fa-wallet text-4xl text-blue-400"></i>
+            <div class="flex flex-col justify-end items-end">
+              <p>{{wallet.balance}}</p>
+              <p class="text-white">Balance</p>
+            </div>
           </div>
-        </div>
-        <div
-          class="head max-w-[280px] flex px-6 justify-between py-6 gap-10 items-cente"
-        >
-          <i class="fas fa-money-bill-wave text-6xl text-green-500"></i>
-          <div>
-            <p>{{wallet.totalWithdrawal}}</p>
-            <p class="text-blue-500">withdrawl</p>
+          <div
+            class="head max-w-[280px] flex justify-between p-4 gap-4 items-cente"
+          >
+            <i class="fas fa-money-bill-wave text-4xl text-green-300"></i>
+            <div class="flex flex-col justify-end items-end">
+              <p>{{wallet.totalWithdrawal}}</p>
+              <p class="text-white">withdrawl</p>
+            </div>
           </div>
         </div>
-      </div>
 
-      <div class="flex items-center justify-center">
-        <div class="HomeCon w-full">
-          <h1>Games</h1>
+        <div class="flex items-center justify-center px-4 mb-3">
+          <div class="HomeCon w-full px-3 pb-4">
+            <h5 class="text-2xl font-bold py-3">Games</h5>
 
-          <div class="grid grid-cols-2 gap-3">
-            <!-- Tab for 2 Players -->
-             {% for item in category %}
-            <a href="/price/{{item['_id']['\u0024oid']}}"
-              class=" flex place-items-center justify-center rounded-lg text-lg font-bold"
-              
-            >
-             <img class="w-full h-full" src="{{ item.image }}"/>
-          </a>
-             {% endfor %}
-
-            
+            <div class="grid grid-cols-2 gap-3">
+              <!-- Tab for 2 Players -->
+              {% for item in category %}
+              <a
+                href="/price/{{item['_id']['\u0024oid']}}"
+                class="flex place-items-center justify-center rounded-lg text-lg font-bold"
+              >
+                <img class="w-full h-full" src="{{ item.image }}" />
+              </a>
+              {% endfor %}
+            </div>
           </div>
         </div>
-      </div>
-      <div class="HomeCon w-full mt-6">
-        <div class="footer flex justify-center">
-          <p>&copy; 2024 Ludo Game. <a href="#">Privacy Policy</a></p>
+        <div class="w-full px-4">
+          <div class="footer flex HomeCon p-10">
+            <p>&copy; 2024 Ludo Game. <a href="#">Privacy Policy</a></p>
+          </div>
         </div>
       </div>
     </div>
