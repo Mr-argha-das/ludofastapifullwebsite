@@ -163,7 +163,8 @@ async def postWiner(winerId: str, loserId: str, price: str):
     winerAmmount = grandTotal - serviceammount
     winerData.balance = winerData.balance + winerAmmount
     winerData.save()
-    loserData.balance = loserData.balance - priceammount
+    loserData.balance
+    loserData.balance= loserData.balance - priceammount
     loserData.save()
     winerUSER = LoginTable.objects.get(id=ObjectId(winerId))
     loserUSER = LoginTable.objects.get(id=ObjectId(loserId))
