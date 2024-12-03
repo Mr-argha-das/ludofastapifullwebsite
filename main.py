@@ -59,7 +59,24 @@ app.include_router(mainCategoryroutes.router, tags=["categorys"])
 # page Routes
 @app.get("/")
 async def landingPage(request: Request):
-    return templates.TemplateResponse('index.html', {"request": request})
+    user= request.session.get("user")
+    if(user):
+      wallet = WalletTable.objects.get(userid=str(user["data"]["_id"]["\u0024oid"]))
+      wallettojson = wallet.to_json()
+      walletFromjson = json.loads(wallettojson)
+      category  = MainCategoryTable.objects.all()
+      tojson = category.to_json()
+      fromjson = json.loads(tojson)
+      print(fromjson)
+      data = {
+          "user": user,
+          "wallet": walletFromjson,
+          "category":fromjson
+      }
+      print(fromjson)
+      return templates.TemplateResponse('home.html', {"request": request, **data})
+    else:
+      return templates.TemplateResponse('index.html', {"request": request})
 
 
 @app.get("/login")
@@ -150,3 +167,7 @@ async def homepost(request: Request, id: str):
     return templates.TemplateResponse('pricelist.html', {"request": request, "items": walletFromjson, "userid" :str(user["data"]["_id"]["\u0024oid"]) })
 
 # Websoket
+import uvicorn
+
+if __name__ == "__main__":
+    uvicorn.run("main:app", host="127.0.0.1", port=8080, reload=True)

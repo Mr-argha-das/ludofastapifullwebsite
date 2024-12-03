@@ -12,15 +12,11 @@ from starlette.middleware.sessions import SessionMiddleware
 
 from wallet.wallet_model import WalletModel, WalletTable
 from bson import ObjectId
-import firebase_admin
-from firebase_admin import credentials, auth
-from firebase_admin import auth
+
 import random
-import pyotp 
 from twilio.rest import Client
 # Initialize Firebase Admin SDK with the service account credentials
-cred = credentials.Certificate("firebase/ludo-754ab-firebase-adminsdk-7oyeb-8a6bb24a75.json")
-firebase_admin.initialize_app(cred)
+
 
 
 
@@ -144,7 +140,7 @@ async def send_otp(request: Request, body: OTPRequest):
     # Save OTP temporarily
     otp_storage[phone_number] = otp
     account_sid = 'AC68d3bdc009b153d3e6c29eaa029799a6'
-    auth_token = '9dd8e039e41cd8b8d205b5e0d0ec257a'
+    auth_token = '266d86bf3d73ce0de8b3121a01307f3a'
     client = Client(account_sid, auth_token)
 
     message = client.messages.create(
@@ -200,3 +196,9 @@ async def verify_otp(request: Request, body: OTPVerifyRequest):
                 "data": None,
                 "status": False
             }
+
+@router.get("/api/logout")
+async def logout(request: Request):
+    # Clear the session
+    request.session.clear()
+    return RedirectResponse(url="/")
