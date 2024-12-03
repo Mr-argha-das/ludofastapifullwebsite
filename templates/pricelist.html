@@ -1,13 +1,28 @@
+ 
+
+
 <!DOCTYPE html>
 <html lang="en">
-
-<head>
-  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet" />
-
+  <head>
+    <link
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css"
+      rel="stylesheet"
+    />
     <meta charset="UTF-8" />
     <script src="https://cdn.tailwindcss.com"></script>
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Beautiful Table Design</title>
+    <script>
+      tailwind.config = {
+        theme: {
+          extend: {
+            backgroundImage: {
+              "custom-image": "url('../static/ludoBG.jpg')",
+            },
+          },
+        },
+      };
+    </script>
     <style>
       .HomeCon {
         display: flex;
@@ -22,39 +37,39 @@
       }
     </style>
   </head>
-
-  <body class="max-w-[500px] mx-auto bg-black text-white py-7">
-    <div class="1 Token">
-      <h1 class="uppercase text-center text-3xl font-bold HomeCon">
-        1 Token Mode
-      </h1>
-      {% for item in items %}
-      <div class="flex flex-col items-start HomeCon py-0 px-0 mt-8">
-        <div
-          class="flex bg-[#444] text-lg font-semibold py-3 px-6 rounded-t-2xl w-full"
-        >
-          Current playing: {{item.totalplayer}}
-        </div>
-        <div
-          class="py-5 px-6 rounded-t-2xl w-full flex justify-between text-center"
-        >
-          <div class="flex gap-6">
-            <div>
-              <p class="text-yellow-600">
-                <i class="fas fa-trophy text-2xl"></i>
-              </p>
-            </div>
-            <p class="text-lg font-bold text-green-600">{{item.price}}</p>
+  <body class="bg-black font-poppins text-white lg:w-[500px] w-full mx-auto">
+    <div class="bg-custom-image bg-cover bg-center h-screen container mx-auto">
+      <div class="1 Token backdrop-blur-lg h-screen py-5 px-4">
+        <h1 class="uppercase text-center text-2xl font-bold HomeCon p-6">
+          1 Token Mode
+        </h1>
+        {% for item in items %}
+        <div class="flex flex-col items-start HomeCon py-0 px-0 mt-5">
+          <div
+            class="flex bg-[#444] text-lg font-semibold py-3 px-6 rounded-t-2xl w-full"
+          >
+            Current playing: {{item.totalplayer}}
           </div>
-          <a
+          <div
+            class="py-5 px-6 rounded-t-2xl w-full flex justify-between text-center"
+          >
+            <div class="flex gap-6">
+              <div>
+                <p class="text-orange-200">
+                  <i class="fas fa-trophy text-2xl"></i>
+                </p>
+              </div>
+              <p class="text-lg font-bold text-white">&#8377 {{item.price}}</p>
+            </div>
+            <a
             href="/game/?userid={{userid}}&priceid={{item['_id']['\u0024oid']}}"
             class="bg-red-500 px-4 py-1 rounded"
             >Play</a
           >
+          </div>
         </div>
+        {% endfor %}
       </div>
-      {% endfor %}
     </div>
   </body>
-
 </html>
