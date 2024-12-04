@@ -12,6 +12,7 @@ from wallet.wallet_model import WalletModel, WalletTable
 from login.model.login_model import LoginBody, LoginTable
 import random
 from typing import List
+from ludoboard.models.gameall import GamePlayedTable, WithdrawalModel
 
 router = APIRouter()
 templates = Jinja2Templates(directory="templates")
@@ -186,6 +187,8 @@ async def checkUserBalacnce(request: Request, priceid: str):
     findWallet = WalletTable.objects.get(userid=str(user["data"]["_id"]["\u0024oid"]))
     gamePrice = SubCategoryTable.objects.get(id=ObjectId(priceid))
     if(findWallet.balance > gamePrice.price):
+        saveUserPlayed = GamePlayedTable(userid=str(user["data"]["_id"]["\u0024oid"]))
+        saveUserPlayed.save()
         return {
             "message": "you have balance to play game",
             "status": True
@@ -196,5 +199,18 @@ async def checkUserBalacnce(request: Request, priceid: str):
             "status":False
         }
 
-
-# /game/?userid={{userid}}&priceid={{item['_id']['\u0024oid']}}
+@router.post("/api/withdrawal")
+async def withdrawal(body: WithdrawalModel):
+    wallet = WalletTable.objects.get(userid=body.userid)
+    if(body.ammount > 50 and wallet.balance <= body.ammount):
+        wallet.balance = wallet.balance - body.ammount
+        wallet.save()
+        return {
+            "message": "Your withdrawal succes",
+            "status": True
+        }
+    else:
+        return {
+            "message": "Your withdrawal faild",
+            "status": False
+        }

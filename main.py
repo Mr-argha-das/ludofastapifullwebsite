@@ -20,6 +20,7 @@ from categoryy.routes import mainCategoryroutes
 import json
 from categoryy.model.main_category import MainCateGoryModel, MainCategoryTable
 from categoryy.model.sub_category import SubCategoryModel, SubCategoryTable
+from ludoboard.models.gameall import GamePlayedTable
 load_dotenv()
 
 SECRET_KEY = os.getenv("SECRET_KEY")
@@ -166,6 +167,13 @@ async def homepost(request: Request, id: str):
     print(walletFromjson)
     return templates.TemplateResponse('pricelist.html', {"request": request, "items": walletFromjson, "userid" :str(user["data"]["_id"]["\u0024oid"]) })
 
+
+@app.get("/profile")
+async def profile(request: Request):
+    user= request.session.get("user")
+    playedgames = GamePlayedTable.objects(userid=str(user["data"]["_id"]["\u0024oid"])).all()
+    playedGamesCount = len(playedgames)
+    return templates.TemplateResponse('profile.html', {"request": request, "playedGamesCount": playedGamesCount})
 # Websoket
 import uvicorn
 
