@@ -62,7 +62,7 @@
               <p class="text-lg font-bold text-white">&#8377 {{item.price}}</p>
             </div>
             <a
-            href="/game/?userid={{userid}}&priceid={{item['_id']['\u0024oid']}}"
+            onClick="fetchData('{{userid}}', '{{item['_id']['\u0024oid']}}');"
             class="bg-red-500 px-4 py-1 rounded"
             >Play</a
           >
@@ -72,4 +72,27 @@
       </div>
     </div>
   </body>
+  <script> 
+    async function fetchData(userid, priceid) {
+      try {
+        
+        const response = await fetch(`/api/check-user-wallet/${priceid}`);
+        
+        if (!response.ok) {
+          throw new Error(`HTTP error! Status: ${response.status}`);
+        }
+    
+        const data = await response.json(); // Convert the response to JSON
+        console.log(data); // Use the data (e.g., display it or process it)
+        if(data.status === true){
+          window.location.href = `/game/?userid=${userid}&priceid=${priceid}`;
+
+        }else{
+         alert("You dont have balance to play this game");
+        }
+      } catch (error) {
+        console.error('Error fetching the data:', error);
+      }
+    }
+  </script>
 </html>
