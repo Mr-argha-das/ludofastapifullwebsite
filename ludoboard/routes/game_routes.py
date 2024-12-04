@@ -205,11 +205,16 @@ async def withdrawal(body: WithdrawalModel):
     if(body.ammount > 50 and wallet.balance <= body.ammount):
         wallet.balance = wallet.balance - body.ammount
         wallet.save()
+        current_datetime = datetime.now()
+        passbook =PassbookTable(userid=body.userid, title=f"Withdrawal success", amount = f"(-) {body.ammount}", cre_date=f"{current_datetime}")
+        passbook.save()
         return {
             "message": "Your withdrawal succes",
             "status": True
         }
     else:
+        passbook =PassbookTable(userid=body.userid, title=f"Withdrawal Faild", amount = f"(-) {body.ammount}", cre_date=f"{current_datetime}")
+        passbook.save()
         return {
             "message": "Your withdrawal faild",
             "status": False
