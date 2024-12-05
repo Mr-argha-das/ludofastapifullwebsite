@@ -8,6 +8,10 @@
       href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css"
       rel="stylesheet"
     />
+    <link
+    href="/static/style.css"
+    rel="stylesheet"
+  />
     <meta charset="UTF-8" />
     <script src="https://cdn.tailwindcss.com"></script>
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -23,25 +27,22 @@
         },
       };
     </script>
-    <style>
-      .HomeCon {
-        display: flex;
-        flex-direction: column;
-        padding: 30px;
-        background: rgba(255, 255, 255, 0.15);
-        backdrop-filter: blur(10px);
-        border-radius: 20px;
-        box-shadow: 0 8px 32px rgba(31, 38, 135, 0.37);
-        text-align: center;
-        color: #fff;
-      }
-    </style>
+    
   </head>
   <body class="bg-black font-poppins text-white lg:w-[500px] w-full mx-auto">
     <div class="bg-custom-image bg-cover bg-center h-screen container mx-auto">
       <div class="1 Token backdrop-blur-lg h-screen py-5 px-4">
-        <h1 class="uppercase text-center text-2xl font-bold HomeCon p-6">
+        <h1 class="uppercase flex justify-between text-2xl font-bold HomeCon p-6 ">
+          <a href="javascript:history.back()" class="flex items-center space-x-2 text-lg font-medium">
+            <i class="fas fa-arrow-left text-2xl"></i>
+            <!-- <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7 7-7m8 14h-8" /> -->
+            </svg>
+            
+        </a>
+        
           1 Token Mode
+          <span></span>
         </h1>
         {% for item in items %}
         <div class="flex flex-col items-start HomeCon py-0 px-0 mt-5">

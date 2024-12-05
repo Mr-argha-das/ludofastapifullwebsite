@@ -175,6 +175,11 @@ async def profile(request: Request):
     playedGamesCount = len(playedgames)
     print(user)
     return templates.TemplateResponse('profile.html', {"request": request, "playedGamesCount": playedGamesCount, "user": user})
+
+@app.get("/withdrawal")
+async def withdrawal(request: Request):
+    return templates.TemplateResponse('withdrawal.html', {"request": request})
+
 # Websoket
 import uvicorn
 
