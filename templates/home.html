@@ -4,16 +4,23 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Ludo Game | Homepage</title>
+
     <link
       rel="stylesheet"
       href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css"
+    />
+    <link
+      rel="stylesheet"
+      href="{{ url_for('static', path='/css/style.css') }}"
     />
 
     <link
       href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap"
       rel="stylesheet"
     />
+
     <script src="https://cdn.tailwindcss.com"></script>
+
     <script>
       tailwind.config = {
         theme: {
@@ -25,6 +32,7 @@
         },
       };
     </script>
+
     <style>
       * {
         margin: 0;
@@ -34,9 +42,7 @@
 
       body {
         max-width: 500px;
-
         font-family: "Poppins", sans-serif;
-
         background-color: #080710;
         height: 100vh;
         display: flex;
@@ -115,42 +121,108 @@
         color: #f09819;
         text-decoration: none;
       }
+
+      .sidebar.open {
+        transform: translateY(0);
+      }
+      .toggle-button {
+        position: fixed;
+        top: 20px;
+        right: 20px;
+        background-color: #007bff;
+        color: white;
+        border: none;
+        padding: 10px 20px;
+        border-radius: 5px;
+        cursor: pointer;
+        z-index: 1100;
+      }
+      .toggle-button:hover {
+        background-color: #0056b3;
+      }
     </style>
   </head>
   <body class="bg-black font-poppins text-white lg:w-[500px] w-full mx-auto">
     <div class="bg-custom-image bg-cover bg-center h-screen container mx-auto">
       <div class="backdrop-blur-lg h-full">
-        <header class="p-4">
+        <div
+          id="sidebar"
+          class="sidebar absolute top-0 pt-[120px] px-4 pb-7 bg-black/7 backdrop-blur-4xl text-white -translate-y-full transition-transform duration-300 ease-in-out flex items-end lg:w-[500px] w-full mx-auto z-30"
+        >
+          <div class="head flex w-full p-5 items-en bg-black/80">
+            <ul class="text-xl flex flex-col gap-5 flex-1">
+              <li><a href="/passbook" class="block text-white">passbook</a></li>
+              <li><a href="/deposit" class="block text-white">Deposit</a></li>
+              <li><a href="/profile" class="block text-white">Profile</a></li>
+            </ul>
+
+            <ul class="text-xl flex flex-col w-full gap-3 flex-1">
+              <!-- <li><a href="/profile" class="block text-white">Profile</a></li> -->
+              <li>
+                <a
+                  href="/logout"
+                  class="rounded flex items-center justify-center py-3 px-3 hover:bg-pink-700 bg-pink-500 text-white hover:text-white transition w-full"
+                >
+                  Logout
+                </a>
+              </li>
+            </ul>
+          </div>
+        </div>
+
+        <!--  header  -->
+        <header class="sticky z-30 top-0 w-full px-4 py-4">
           <div
             class="container px-5 w-full head mx-auto flex h-20 justify-between items-center"
           >
             <div class="text-2xl font-bold">
               <a href="/" class="text-white hover:text-gray-300">Logo</a>
             </div>
-            <nav class="space-x-6">
-              <a href="/passbook" class="hover:text-gray-300">Passbook</a>
-              <a href="/deposit" class="hover:text-gray-300">Deposit</a>
-              <a href="/profile" class="hover:text-gray-300">Profile</a>
-              <a href="/logout" class="hover:text-gray-300">Logout</a>
-            </nav>
+            <!-- <button class="md:hidden text-black" id="hamburger-icon">
+              <svg
+                class="w-6 h-6"
+                fill="none"
+                stroke="currentColor"
+                viewBox="0 0 24 24"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <path
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  stroke-width="2"
+                  d="M4 6h16M4 12h16M4 18h16"
+                ></path>
+              </svg>
+            </button> -->
+            <!-- Hamburger Icon -->
+            <button class="hamburger flex" id="toggle-menu">
+              <div></div>
+              <div></div>
+              <div></div>
+            </button>
           </div>
         </header>
+
+        <!-- ÷ -->
         <div class="flex justify-between items-center mb-3 py-2 px-4">
-          <div class="head max-w-[250px] flex justify-end p-4 gap-4">
-            <i class="fas fa-wallet text-4xl text-blue-400"></i>
-            <div class="flex flex-col justify-end items-end">
+          <div
+            class="head max-w-[250px] min-w-[120px] flex-col flex justify-end p-4 gap-4"
+          >
+            <div class="flex justify-between">
+              <i class="fas fa-wallet text-4xl text-blue-400"></i>
               <p>{{wallet.balance}}</p>
-              <p class="text-white">Balance</p>
             </div>
+            <p class="text-white">Balance</p>
           </div>
           <div
-            class="head max-w-[280px] flex justify-between p-4 gap-4 items-cente"
+            class="head max-w-[280px] min-w-[120px] flex flex-col justify-between p-4 gap-4 items-cente"
           >
-            <i class="fas fa-money-bill-wave text-4xl text-green-300"></i>
-            <div class="flex flex-col justify-end items-end">
+            <!-- <i class="fas fa-money-bill-wave text-4xl text-green-300"></i> -->
+            <div class="flex justify-between">
+              <i class="fas fa-coins text-4xl text-green-300"></i>
               <p>{{wallet.totalWithdrawal}}</p>
-              <p class="text-white">withdrawl</p>
             </div>
+            <p class="text-white">withdrawl</p>
           </div>
         </div>
 
@@ -178,21 +250,18 @@
         </div>
       </div>
     </div>
-    <div id="sidebar" class="sidebar lg:w-[500px] w-full mx-auto z-20">
-      <ul class="text-xl px-10 flex flex-col gap-3">
-        <li><a href="#" class="block text-white">Home</a></li>
-        <li><a href="#" class="block text-white">About Game</a></li>
-        <li><a href="#" class="block text-white">How to Play</a></li>
-        <li><a href="#" class="block text-white">Features</a></li>
-        <li><a href="#" class="block text-white mr-4">Contact</a></li>
-        <li>
-          <button
-            class="rounded py-3 px-3 hover:bg-pink-700 bg-pink-500 text-white hover:text-white transition w-full"
-          >
-            Play Now
-          </button>
-        </li>
-      </ul>
-    </div>
+    <script>
+      // Get references to the sidebar and toggle button
+      const sidebar = document.getElementById("sidebar");
+      const toggleMenuButton = document.getElementById("toggle-menu");
+
+      // Function to toggle the sidebar
+      function toggleMenu() {
+        sidebar.classList.toggle("open"); // Add/remove "open" class to toggle visibility
+      }
+
+      // Add event listener to the toggle button
+      toggleMenuButton.addEventListener("click", toggleMenu);
+    </script>
   </body>
 </html>

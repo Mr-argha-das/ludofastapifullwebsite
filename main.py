@@ -173,7 +173,8 @@ async def profile(request: Request):
     user= request.session.get("user")
     playedgames = GamePlayedTable.objects(userid=str(user["data"]["_id"]["\u0024oid"])).all()
     playedGamesCount = len(playedgames)
-    return templates.TemplateResponse('profile.html', {"request": request, "playedGamesCount": playedGamesCount})
+    print(user)
+    return templates.TemplateResponse('profile.html', {"request": request, "playedGamesCount": playedGamesCount, "user": user})
 # Websoket
 import uvicorn
 

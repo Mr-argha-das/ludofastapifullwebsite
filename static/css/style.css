@@ -69,11 +69,11 @@ body {
 .transition-transform {
   transition: transform 0.3s ease;
 }
-header {
+/* header {
   background-color: rgba(0, 0, 0, 0.5);
   color: #fff;
   padding: 20px 0;
-}
+} */
 
 header .logo {
   font-size: 24px;
@@ -86,7 +86,7 @@ header nav ul {
 }
 
 header nav ul li {
-  margin-left: 20px;
+  /* margin-left: 20px; */
 }
 
 header nav ul li a {
@@ -101,7 +101,6 @@ header nav ul li a {
   background-size: cover;
   background-position: center;
   color: #fff;
-
   padding: 100px 20px;
 }
 
@@ -182,4 +181,3 @@ footer {
   background-color: #333;
   color: #fff;
 }
-
