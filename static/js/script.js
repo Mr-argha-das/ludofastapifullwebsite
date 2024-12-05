@@ -95,3 +95,5 @@ const board = document.getElementById("board");
 
       // Initialize the game
       generateBoard();
+
+ 

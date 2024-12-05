@@ -1,0 +1,48 @@
+<div
+  id="sidebar"
+  class="sidebar absolute top-0 pt-[120px] px-4 pb-7 bg-black/7 backdrop-blur-4xl text-white -translate-y-full transition-transform duration-300 ease-in-out flex items-end lg:w-[500px] w-full mx-auto z-30"
+>
+  <div class="head flex w-full p-5 items-en bg-black/80">
+    <ul class="text-xl flex flex-col gap-5 flex-1">
+      <li><a href="/home" class="block text-white">Home</a></li>
+      <li><a href="/passbook" class="block text-white">passbook</a></li>
+      <li><a href="/deposit" class="block text-white">Deposit</a></li>
+      <li><a href="/withdrawl" class="block text-white">withdrawl</a></li>
+      <li><a href="/profile" class="block text-white">Profile</a></li>
+    </ul>
+
+    <ul class="text-xl flex flex-col w-full gap-3 flex-1">
+      <!-- <li><a href="/profile" class="block text-white">Profile</a></li> -->
+      <li>
+        <a
+          href="/api/logout"
+          class="rounded flex items-center justify-center py-3 px-3 hover:bg-pink-700 bg-pink-500 text-white hover:text-white transition w-full"
+        >
+          Logout
+        </a>
+      </li>
+    </ul>
+  </div>
+</div>
+
+<!--  header  -->
+<body
+  class="bg-black relative font-poppins text-white lg:w-[500px] w-full mx-auto"
+>
+  <header class="absolute z-30 top-0 w-full px-4 py-4 lg:w-[500px]">
+    <div
+      class="container px-5 w-full head mx-auto flex h-20 justify-between items-center"
+    >
+      <div class="text-2xl font-bold">
+        <a href="/" class="text-white hover:text-gray-300">Logo</a>
+      </div>
+
+      <!-- Hamburger Icon -->
+      <button class="hamburger flex" id="toggle-menu">
+        <div></div>
+        <div></div>
+        <div></div>
+      </button>
+    </div>
+  </header>
+</body>

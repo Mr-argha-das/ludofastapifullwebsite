@@ -1,0 +1,277 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <head>
+      <meta charset="UTF-8" />
+      <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+      <title>Ludo Game | Homepage</title>
+
+      <link
+        rel="stylesheet"
+        href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css"
+      />
+      <link
+        rel="stylesheet"
+        href="{{ url_for('static', path='/css/style.css') }}"
+      />
+
+      <link
+        href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap"
+        rel="stylesheet"
+      />
+
+      <script src="https://cdn.tailwindcss.com"></script>
+
+      
+      <script>
+        tailwind.config = {
+          theme: {
+            extend: {
+              backgroundImage: {
+                "custom-image": "url('../static/ludoBG.jpg')",
+              },
+            },
+          },
+        };
+      </script>
+
+      <style>
+        * {
+          margin: 0;
+          padding: 0;
+          box-sizing: border-box;
+        }
+
+        body {
+          max-width: 500px;
+          font-family: "Poppins", sans-serif;
+          background-color: #080710;
+          height: 100vh;
+          display: flex;
+        }
+
+        .head {
+          background: rgba(255, 255, 255, 0.15);
+          backdrop-filter: blur(10px);
+          border-radius: 20px;
+          box-shadow: 0 8px 32px rgba(59, 59, 59, 0.37);
+          text-align: center;
+          color: #fff;
+        }
+
+        .HomeCon {
+          display: flex;
+          flex-direction: column;
+          background: rgba(255, 255, 255, 0.15);
+          backdrop-filter: blur(10px);
+          border-radius: 20px;
+          box-shadow: 0 8px 32px rgba(31, 38, 135, 0.37);
+          text-align: center;
+          color: #fff;
+        }
+
+        .container h1 {
+          font-size: 2.5rem;
+          margin-bottom: 1rem;
+          font-weight: 600;
+        }
+
+        .tab-container {
+          display: flex;
+          justify-content: space-between;
+          margin-top: 2rem;
+        }
+
+        .tab {
+          width: 140px;
+          height: 140px;
+          background: linear-gradient(to right, #ff512f, #dd2476);
+          border-radius: 20px;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          font-size: 1.2rem;
+          font-weight: 600;
+          transition: all 0.3s ease;
+          cursor: pointer;
+          box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+        }
+
+        .tab:hover {
+          transform: scale(1.05);
+          background: linear-gradient(to right, #56ab2f, #a8e063);
+        }
+
+        .tab-2player {
+          background: linear-gradient(to right, #1e3c72, #2a5298);
+        }
+
+        .tab-4player {
+          background: linear-gradient(to right, #ff512f, #f09819);
+        }
+
+        .tab p {
+          color: white;
+          font-size: 1.2rem;
+        }
+
+        .footer {
+          font-size: 0.9rem;
+        }
+
+        .footer a {
+          color: #f09819;
+          text-decoration: none;
+        }
+
+        .sidebar.open {
+          transform: translateY(0);
+        }
+        .toggle-button {
+          position: fixed;
+          top: 20px;
+          right: 20px;
+          background-color: #007bff;
+          color: white;
+          border: none;
+          padding: 10px 20px;
+          border-radius: 5px;
+          cursor: pointer;
+          z-index: 1100;
+        }
+        .toggle-button:hover {
+          background-color: #0056b3;
+        }
+        .head {
+        background: rgba(255, 255, 255, 0.15);
+        backdrop-filter: blur(20px);
+        border-radius: 20px;
+        box-shadow: 0 8px 32px rgba(39, 39, 39, 0.37);
+        text-align: center;
+        color: #fff;
+      }
+      .HomeCon {
+        display: flex;
+        flex-direction: column;
+        background: rgba(255, 255, 255, 0.15);
+        backdrop-filter: blur(10px);
+        border-radius: 20px;
+        box-shadow: 0 8px 32px rgba(31, 38, 135, 0.37);
+        text-align: center;
+        color: #fff;
+      }
+      .profile-header {
+        display: flex;
+        justify-content: center;
+        position: relative;
+        margin-bottom: 20px;
+      }
+      .profile-header img {
+        width: 80px;
+        height: 80px;
+        border-radius: 50%;
+        border: 2px solid #ddd;
+      }
+
+      .edit-icon {
+        position: absolute;
+        bottom: 5px;
+        right: 40px;
+        background-color: white;
+        border: 1px solid #ddd;
+        border-radius: 50%;
+        padding: 5px;
+        cursor: pointer;
+      }
+
+      /* .profile-info {
+        text-align: center;
+      } */
+
+      .profile-info input {
+        width: 100%;
+        padding: 10px;
+        margin: 5px 0;
+        border: 1px solid #ddd;
+        border-radius: 5px;
+      }
+      .profile-info button {
+        background-color: #007bff;
+        color: white;
+        border: none;
+        padding: 10px;
+        cursor: pointer;
+        border-radius: 5px;
+        width: 100%;
+      }
+
+      .kyc-status {
+        text-align: center;
+        margin: 20px 0;
+      }
+
+      .kyc-status .status {
+        font-weight: bold;
+        color: #fff;
+        margin-bottom: 10px;
+      }
+
+      .kyc-status button {
+        background-color: #ff4b4b;
+        color: white;
+        border: none;
+        padding: 10px;
+        cursor: pointer;
+        border-radius: 5px;
+      }
+
+      .metrics {
+        display: flex;
+        justify-content: space-between;
+        margin: 10px 0;
+        gap: 10px;
+      }
+
+      .metrics .metric {
+        background-color: #f9f9f9;
+        padding: 10px;
+        border-radius: 5px;
+        text-align: center;
+        flex: 1;
+        margin: 5px;
+        box-shadow: 0 0 5px rgba(0, 0, 0, 0.05);
+      }
+
+      .logout {
+        background-color: red;
+        color: white;
+        border: none;
+        padding: 10px;
+        cursor: pointer;
+        border-radius: 5px;
+        width: 100%;
+        text-align: center;
+      }
+      </style>
+    </head>
+  </head>
+  <body class="bg-black font-poppins text-white lg:w-[500px] w-full mx-auto">
+    {% include 'header.html' %} 
+    {% block content %} 
+    {% endblock %} 
+
+    <script>
+        // Get references to the sidebar and toggle button
+        const sidebar = document.getElementById("sidebar");
+        const toggleMenuButton = document.getElementById("toggle-menu");
+
+        // Function to toggle the sidebar
+        function toggleMenu() {
+          sidebar.classList.toggle("open"); // Add/remove "open" class to toggle visibility
+        }
+
+        // Add event listener to the toggle button
+        toggleMenuButton.addEventListener("click", toggleMenu);
+      </script>
+  </body>
+</html>

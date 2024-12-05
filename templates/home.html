@@ -1,267 +1,89 @@
-<!DOCTYPE html>
-<html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Ludo Game | Homepage</title>
+{% extends 'base.html' %} {% block content %}
+<div class="bg-custom-image bg-cover bg-center h-screen container mx-auto">
+  <div class="backdrop-blur-lg h-full pt-[120px]">
+    <div
+      id="sidebar"
+      class="sidebar absolute top-0 pt-[120px] px-4 pb-7 bg-black/7 backdrop-blur-4xl text-white -translate-y-full transition-transform duration-300 ease-in-out flex items-end lg:w-[500px] w-full mx-auto z-30"
+    >
+      <div class="head flex w-full p-5 items-en bg-black/80">
+        <ul class="text-xl flex flex-col gap-5 flex-1">
+          <li><a href="/passbook" class="block text-white">passbook</a></li>
+          <li><a href="/deposit" class="block text-white">Deposit</a></li>
+          <li><a href="/profile" class="block text-white">Profile</a></li>
+        </ul>
 
-    <link
-      rel="stylesheet"
-      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css"
-    />
-    <link
-      rel="stylesheet"
-      href="{{ url_for('static', path='/css/style.css') }}"
-    />
+        <ul class="text-xl flex flex-col w-full gap-3 flex-1">
+          <!-- <li><a href="/profile" class="block text-white">Profile</a></li> -->
+          <li>
+            <a
+              href="/logout"
+              class="rounded flex items-center justify-center py-3 px-3 hover:bg-pink-700 bg-pink-500 text-white hover:text-white transition w-full"
+            >
+              Logout
+            </a>
+          </li>
+        </ul>
+      </div>
+    </div>
 
-    <link
-      href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap"
-      rel="stylesheet"
-    />
-
-    <script src="https://cdn.tailwindcss.com"></script>
-
-    <script>
-      tailwind.config = {
-        theme: {
-          extend: {
-            backgroundImage: {
-              "custom-image": "url('../static/ludoBG.jpg')",
-            },
-          },
-        },
-      };
-    </script>
-
-    <style>
-      * {
-        margin: 0;
-        padding: 0;
-        box-sizing: border-box;
-      }
-
-      body {
-        max-width: 500px;
-        font-family: "Poppins", sans-serif;
-        background-color: #080710;
-        height: 100vh;
-        display: flex;
-      }
-
-      .head {
-        background: rgba(255, 255, 255, 0.15);
-        backdrop-filter: blur(10px);
-        border-radius: 20px;
-        box-shadow: 0 8px 32px rgba(59, 59, 59, 0.37);
-        text-align: center;
-        color: #fff;
-      }
-
-      .HomeCon {
-        display: flex;
-        flex-direction: column;
-        background: rgba(255, 255, 255, 0.15);
-        backdrop-filter: blur(10px);
-        border-radius: 20px;
-        box-shadow: 0 8px 32px rgba(31, 38, 135, 0.37);
-        text-align: center;
-        color: #fff;
-      }
-
-      .container h1 {
-        font-size: 2.5rem;
-        margin-bottom: 1rem;
-        font-weight: 600;
-      }
-
-      .tab-container {
-        display: flex;
-        justify-content: space-between;
-        margin-top: 2rem;
-      }
-
-      .tab {
-        width: 140px;
-        height: 140px;
-        background: linear-gradient(to right, #ff512f, #dd2476);
-        border-radius: 20px;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        font-size: 1.2rem;
-        font-weight: 600;
-        transition: all 0.3s ease;
-        cursor: pointer;
-        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
-      }
-
-      .tab:hover {
-        transform: scale(1.05);
-        background: linear-gradient(to right, #56ab2f, #a8e063);
-      }
-
-      .tab-2player {
-        background: linear-gradient(to right, #1e3c72, #2a5298);
-      }
-
-      .tab-4player {
-        background: linear-gradient(to right, #ff512f, #f09819);
-      }
-
-      .tab p {
-        color: white;
-        font-size: 1.2rem;
-      }
-
-      .footer {
-        font-size: 0.9rem;
-      }
-
-      .footer a {
-        color: #f09819;
-        text-decoration: none;
-      }
-
-      .sidebar.open {
-        transform: translateY(0);
-      }
-      .toggle-button {
-        position: fixed;
-        top: 20px;
-        right: 20px;
-        background-color: #007bff;
-        color: white;
-        border: none;
-        padding: 10px 20px;
-        border-radius: 5px;
-        cursor: pointer;
-        z-index: 1100;
-      }
-      .toggle-button:hover {
-        background-color: #0056b3;
-      }
-    </style>
-  </head>
-  <body class="bg-black font-poppins text-white lg:w-[500px] w-full mx-auto">
-    <div class="bg-custom-image bg-cover bg-center h-screen container mx-auto">
-      <div class="backdrop-blur-lg h-full">
-        <div
-          id="sidebar"
-          class="sidebar absolute top-0 pt-[120px] px-4 pb-7 bg-black/7 backdrop-blur-4xl text-white -translate-y-full transition-transform duration-300 ease-in-out flex items-end lg:w-[500px] w-full mx-auto z-30"
-        >
-          <div class="head flex w-full p-5 items-en bg-black/80">
-            <ul class="text-xl flex flex-col gap-5 flex-1">
-              <li><a href="/passbook" class="block text-white">passbook</a></li>
-              <li><a href="/deposit" class="block text-white">Deposit</a></li>
-              <li><a href="/profile" class="block text-white">Profile</a></li>
-            </ul>
-
-            <ul class="text-xl flex flex-col w-full gap-3 flex-1">
-              <!-- <li><a href="/profile" class="block text-white">Profile</a></li> -->
-              <li>
-                <a
-                  href="/logout"
-                  class="rounded flex items-center justify-center py-3 px-3 hover:bg-pink-700 bg-pink-500 text-white hover:text-white transition w-full"
-                >
-                  Logout
-                </a>
-              </li>
-            </ul>
-          </div>
-        </div>
-
-        <!--  header  -->
-        <header class="sticky z-30 top-0 w-full px-4 py-4">
+    <!--  header  -->
+    <!-- <header class="sticky z-30 top-0 w-full px-4 py-4">
           <div
             class="container px-5 w-full head mx-auto flex h-20 justify-between items-center"
           >
             <div class="text-2xl font-bold">
               <a href="/" class="text-white hover:text-gray-300">Logo</a>
             </div>
-            <!-- <button class="md:hidden text-black" id="hamburger-icon">
-              <svg
-                class="w-6 h-6"
-                fill="none"
-                stroke="currentColor"
-                viewBox="0 0 24 24"
-                xmlns="http://www.w3.org/2000/svg"
-              >
-                <path
-                  stroke-linecap="round"
-                  stroke-linejoin="round"
-                  stroke-width="2"
-                  d="M4 6h16M4 12h16M4 18h16"
-                ></path>
-              </svg>
-            </button> -->
-            <!-- Hamburger Icon -->
+            
             <button class="hamburger flex" id="toggle-menu">
               <div></div>
               <div></div>
               <div></div>
             </button>
           </div>
-        </header>
+        </header> -->
 
-        <!-- ÷ -->
-        <div class="flex justify-between items-center mb-3 py-2 px-4">
-          <div
-            class="head max-w-[250px] min-w-[120px] flex-col flex justify-end p-4 gap-4"
-          >
-            <div class="flex justify-between">
-              <i class="fas fa-wallet text-4xl text-blue-400"></i>
-              <p>{{wallet.balance}}</p>
-            </div>
-            <p class="text-white">Balance</p>
-          </div>
-          <div
-            class="head max-w-[280px] min-w-[120px] flex flex-col justify-between p-4 gap-4 items-cente"
-          >
-            <!-- <i class="fas fa-money-bill-wave text-4xl text-green-300"></i> -->
-            <div class="flex justify-between">
-              <i class="fas fa-coins text-4xl text-green-300"></i>
-              <p>{{wallet.totalWithdrawal}}</p>
-            </div>
-            <p class="text-white">withdrawl</p>
-          </div>
+    <!-- ÷ -->
+    <div class="flex justify-between items-center mb-3 py-2 px-4">
+      <div
+        class="head max-w-[250px] min-w-[120px] flex-col flex justify-end p-4 gap-4"
+      >
+        <div class="flex justify-between">
+          <i class="fas fa-wallet text-4xl text-blue-400"></i>
+          <p>{{wallet.balance}}</p>
         </div>
-
-        <div class="flex items-center justify-center px-4 mb-3">
-          <div class="HomeCon w-full px-3 pb-4">
-            <h5 class="text-2xl font-bold py-3">Games</h5>
-
-            <div class="grid grid-cols-2 gap-3">
-              <!-- Tab for 2 Players -->
-              {% for item in category %}
-              <a
-                href="/price/{{item['_id']['\u0024oid']}}"
-                class="flex place-items-center justify-center rounded-lg text-lg font-bold"
-              >
-                <img class="w-full h-full" src="{{ item.image }}" />
-              </a>
-              {% endfor %}
-            </div>
-          </div>
+        <p class="text-white">Balance</p>
+      </div>
+      <div
+        class="head max-w-[280px] min-w-[120px] flex flex-col justify-between p-4 gap-4 items-cente"
+      >
+        <!-- <i class="fas fa-money-bill-wave text-4xl text-green-300"></i> -->
+        <div class="flex justify-between">
+          <i class="fas fa-coins text-4xl text-green-300"></i>
+          <p>{{wallet.totalWithdrawal}}</p>
         </div>
-        <div class="w-full px-4">
-          <div class="footer flex HomeCon p-10">
-            <p>&copy; 2024 Ludo Game. <a href="#">Privacy Policy</a></p>
-          </div>
+        <p class="text-white">withdrawl</p>
+      </div>
+    </div>
+
+    <div class="flex items-center justify-center px-4 mb-10">
+      <div class="HomeCon w-full px-3 pb-4">
+        <h5 class="text-2xl font-bold py-3">Games</h5>
+
+        <div class="grid grid-cols-2 gap-3">
+          <!-- Tab for 2 Players -->
+          {% for item in category %}
+          <a
+            href="/price/{{item['_id']['\u0024oid']}}"
+            class="flex place-items-center justify-center rounded-lg text-lg font-bold"
+          >
+            <img class="w-full h-full" src="{{ item.image }}" />
+          </a>
+          {% endfor %}
         </div>
       </div>
     </div>
-    <script>
-      // Get references to the sidebar and toggle button
-      const sidebar = document.getElementById("sidebar");
-      const toggleMenuButton = document.getElementById("toggle-menu");
+  </div>
+</div>
 
-      // Function to toggle the sidebar
-      function toggleMenu() {
-        sidebar.classList.toggle("open"); // Add/remove "open" class to toggle visibility
-      }
-
-      // Add event listener to the toggle button
-      toggleMenuButton.addEventListener("click", toggleMenu);
-    </script>
-  </body>
-</html>
+{% endblock %}
