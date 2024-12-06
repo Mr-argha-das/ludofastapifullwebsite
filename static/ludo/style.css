@@ -3,18 +3,67 @@
 }
 
 .ludo-container {
-  width: 450px;
-  margin: 20px auto;
+  width: 100%;
+  max-width: 430px;
+  height: 100%;
+  max-height: 430px;
+  margin: 0.5vw auto;
+  /* padding: 3px; */
 }
 
 .ludo-container .ludo {
+  /* padding: 3px; */
+  width: 99%;
+  max-width: 430px;
+  height: 100vw;
+  max-height: 430px;
 
-  height: 450px;
-  width: 100%;
-  background-image: url('./ludo-bg.jpg');
-  background-size: contain;
+  background-image: url("./ludo-bg.jpg");
+  background-size: cover;
   position: relative;
+  background-position: center;
 }
+
+/* @media screen and (max-width: 425px) {
+  .ludo-container {
+    width: 400px;
+    margin: 20px auto;
+  }
+  .ludo-container .ludo {
+    height: 400px;
+    width: 100%;
+    background-image: url("./ludo-bg.jpg");
+    background-size: contain;
+    position: relative;
+  }
+}
+@media screen and (max-width: 375px) {
+  .ludo-container {
+    width: 100%;
+
+    margin: 20px auto;
+  }
+  .ludo-container .ludo {
+    max-height: 100%;
+    width: 100%;
+    background-image: url("./ludo-bg.jpg");
+    background-size: contain;
+    position: relative;
+  }
+}
+@media screen and (max-width: 320px) {
+  .ludo-container {
+    width: 290px;
+    margin: 20px auto;
+  }
+  .ludo-container .ludo {
+    height: 290px;
+    width: 100%;
+    background-image: url("./ludo-bg.jpg");
+    background-size: contain;
+    position: relative;
+  }
+} */
 
 .player-pieces {
   height: 100%;
@@ -22,14 +71,14 @@
 }
 
 .player-piece {
-  width: 5%;
+  width: 6%;
   height: 10%;
   /* border: 2px solid; */
   border-radius: 10px;
   position: absolute;
-  transform: translate(12%, -45%);
-  transition: all .2s;
-  
+  transform: translate(10%, -45%);
+  transition: all 0.2s;
+
   z-index: 1;
 
   /* top: 15%;
@@ -41,32 +90,45 @@
   animation: jump 1s ease infinite;
 }
 @keyframes jump {
-  0%, 100% {
-      transform: translateY(30); /* Start and end at the original position */
+  0%,
+  100% {
+    transform: translateY(30); /* Start and end at the original position */
   }
   50% {
-      transform: translateY(0); /* Move up by 30px */
+    transform: translateY(0); /* Move up by 30px */
+  }
+}
+@keyframes spin {
+  0% {
+    transform: translate(50%, 50%) rotate(0deg);
+  }
+  50% {
+    transform: translate(50%, 50%) rotate(180deg) scale(1.4);
+  }
+  100% {
+    transform: translate(50%, 50%) rotate(360deg);
   }
 }
 
 [player-id="P1"].player-piece {
   /* background-color: #2eafff; */
-  background-image: url('./freepik_br_b5722e84-fd90-4fcb-94df-6c882a480cb8.png');
-  background-size: cover;   /* Scales the image to cover the div without distortion */
+  background-image: url("./blueToken.png");
+  background-size: cover; /* Scales the image to cover the div without distortion */
   background-position: center;
 }
 
 [player-id="P2"].player-piece {
   /* background-color: #00b550; */
-  background-image: url('./freepik_br_b5722e84-fd90-4fcb-94df-6c882a480cb8.png');
-  background-size: cover;   /* Scales the image to cover the div without distortion */
+  background-image: url("./greenToken.png");
+  background-size: cover; /* Scales the image to cover the div without distortion */
   background-position: center;
 }
 
 .player-base {
   width: 40%;
   height: 40%;
-  border: 30px solid;
+  border: 10px solid;
+  /*  change */
   position: absolute;
 }
 
@@ -83,12 +145,12 @@
 }
 
 .player-base.highlight {
-  animation: border-blink .7s infinite ease-in-out;
+  animation: border-blink 0.7s infinite ease-in-out;
 }
 
 @keyframes border-blink {
   50% {
-      border-color: rgba(255, 255, 255, 0.8);
+    border-color: rgba(255, 255, 255, 0.8);
   }
 }
 
