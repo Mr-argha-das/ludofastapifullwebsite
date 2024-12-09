@@ -25,14 +25,36 @@
         },
       };
     </script>
+    <style>
+      /* #loader {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        position: fixed;
+        top: 50%;
+        left: 50%;
+
+        z-index: 1000;
+      }
+
+      #content {
+        display: none;
+      } */
+    </style>
   </head>
   <body class="bg-black font-poppins text-white lg:w-[500px] w-full mx-auto">
     <div
       class="bg-custom-image bg-cove bg-cente w-full h-screen container mx-auto"
     >
-    <div id="loader" style="display: block;">Loading...</div>
+      <div
+        id="loader"
+        style="display: block"
+        class="fixed top-[50%] left-[50%] translate-x-[-50%] translate-y-[-50%] text-center"
+      >
+        We are finding your opponent...
+      </div>
+
       <div class="flex h-full">
-       
         <!-- <div class="ludo-container">
           <div class="ludo">
             <div class="player-pieces">
@@ -61,7 +83,7 @@
             <h2 class="active-player">Active Player: <span></span></h2>
           </div>
         </div> -->
-        <div class="ludo-container" id="content" style="display: none;">
+        <div class="ludo-container" id="content" style="display: none">
           <div class="w-full flex justify-end">
             <div class="bg-green- flex items-end mb-1 gap-3">
               <!-- <div class="p-7 bg-white h-10 f rounded-md"></div> -->
@@ -111,7 +133,8 @@
             <div class="row">
               <button id="dice-btn" class="btn btn-dice">Roll</button>
               <div class="dice-value"></div>
-              <button id="reset-btn" class="btn btn-reset">Reset</button>
+
+              <button id="reset-btn" class="btn btn-reset"></button>
             </div>
             <h2 class="active-player">Active Player: <span></span></h2>
           </div>
@@ -122,10 +145,9 @@
         ></script>
       </div>
     </div>
-    <script> 
-
-      document.getElementById('loader').style.display = 'block';
-document.getElementById('content').style.display = 'none';
+    <script>
+      document.getElementById("loader").style.display = "block";
+      document.getElementById("content").style.display = "none";
     </script>
   </body>
 </html>
