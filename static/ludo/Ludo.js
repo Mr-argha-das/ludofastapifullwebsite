@@ -2,6 +2,7 @@ import { BASE_POSITIONS, HOME_ENTRANCE, HOME_POSITIONS, PLAYERS, SAFE_POSITIONS,
 import { UI } from './UI.js';
 
 export class Ludo {
+    
     tempPositions = {
         P1: [],
         P2: []
@@ -11,10 +12,11 @@ export class Ludo {
         P2: []
     };
 
-    yourPlayer = '';  // To store the player role (P1 or P2)
+    yourPlayer = null;  // To store the player role (P1 or P2)
     opponentValue = {};
     opponentDATA = {};
     _diceValue;
+    checkVariable;
     get diceValue() {
         return this._diceValue;
     }
@@ -415,5 +417,14 @@ export class Ludo {
         }
         
     }
+    
+    checkVariable = setInterval(function () {
+        if (yourPlayer !== null) {
+            // Hide the loader and show the content
+            document.getElementById('loader').style.display = 'none';
+            document.getElementById('content').style.display = 'block';
+            clearInterval(checkVariable);  // Stop checking once variable is not null
+        }
+    }, 1000);
 }
 
