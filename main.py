@@ -1,4 +1,5 @@
 from fastapi import APIRouter, FastAPI, WebSocket, WebSocketDisconnect
+from fastapi.responses import JSONResponse
 from mongoengine import connect
 from login.routes import login_routes
 from ludoboard.routes import game_routes
@@ -7,6 +8,7 @@ from fastapi.middleware.cors import CORSMiddleware
 from fastapi import Request
 from fastapi.templating import Jinja2Templates
 from authlib.integrations.starlette_client import OAuth
+from starlette.exceptions import HTTPException as StarletteHTTPException
 from starlette.config import Config
 from starlette.middleware.sessions import SessionMiddleware
 import os
@@ -45,7 +47,7 @@ app.add_middleware(
 app.add_middleware(
     SessionMiddleware,
     secret_key=SECRET_KEY,
-    max_age=3600,
+    max_age=604800,
     session_cookie="your_session_cookie",
 )
 
@@ -58,6 +60,12 @@ app.include_router(game_routes.router, tags=["Game"])
 app.include_router(passbook_routes.router, tags=["payments"])
 app.include_router(mainCategoryroutes.router, tags=["categorys"])
 # page Routes
+@app.exception_handler(StarletteHTTPException)
+async def custom_404_handler(request: Request, exc: StarletteHTTPException):
+    if exc.status_code == 404:
+        return templates.TemplateResponse("404.html", {"request": request}, status_code=404)
+    return JSONResponse(status_code=exc.status_code, content={"detail": exc.detail})
+
 @app.get("/")
 async def landingPage(request: Request):
     user= request.session.get("user")
