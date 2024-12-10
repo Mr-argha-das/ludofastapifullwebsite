@@ -94,7 +94,7 @@
                   <div class="p-7 w-7 h-7 bg-white f rounded-md"></div>
                   <div class="p-8 w-8 h-8 bg-red-300 rounded-md"></div>
                 </div>
-                <p>Namesdsdsd</p>
+                <p id="p2-player"></p>
               </div>
             </div>
           </div>
@@ -125,7 +125,7 @@
                   <div class="p-8 w-8 h-8 bg-red-300 rounded-md"></div>
                   <div class="p-7 w-7 h-7 bg-white f rounded-md"></div>
                 </div>
-                <p>Namesdsdsd</p>
+                <p id = "p1-player"></p>
               </div>
             </div>
           </div>
@@ -146,6 +146,7 @@
       </div>
     </div>
     <script>
+      const userdata = {{ userdata | tojson }};
       document.getElementById("loader").style.display = "block";
       document.getElementById("content").style.display = "none";
     </script>

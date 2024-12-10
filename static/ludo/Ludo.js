@@ -413,6 +413,15 @@ export class Ludo {
         this.yourPlayer = data.your_player;
         console.log(this.yourPlayer + "======== here is player");
         this.opponentDATA = data.opponent_data;
+        
+        console.log("User Data:", userdata);
+        if (this.yourPlayer === 'P1'){
+            document.getElementById("p1-player").textContent = userdata.name;
+            document.getElementById("p2-player").textContent = data.opponent_data.name;
+        }else{
+            document.getElementById("p1-player").textContent = data.opponent_data.name;
+            document.getElementById("p2-player").textContent = userdata.name;
+        }
       }
     };
 

@@ -1,5 +1,6 @@
 from fastapi import APIRouter, FastAPI, WebSocket, WebSocketDisconnect
 from fastapi.responses import JSONResponse
+from login.model.login_model import LoginTable
 from mongoengine import connect
 from login.routes import login_routes
 from ludoboard.routes import game_routes
@@ -108,8 +109,11 @@ async def verfyotp(request: Request):
 
 @app.get("/game/")
 async def landingPage(request: Request, userid: str, priceid: str):
+    userData = LoginTable.objects.get(id=ObjectId(str(userid)))
+    tojson = userData.to_json()
+    fromjson = json.loads(tojson)
     if (userid and priceid):
-       return templates.TemplateResponse('ludo_4player.html', {"request": request})
+       return templates.TemplateResponse('ludo_4player.html', {"request": request, "userdata": fromjson})
     else:
         return {
             "page not found"
@@ -174,6 +178,7 @@ async def homepost(request: Request, id: str):
     
     print(walletFromjson)
     return templates.TemplateResponse('pricelist.html', {"request": request, "items": walletFromjson, "userid" :str(user["data"]["_id"]["\u0024oid"]) })
+
 
 
 @app.get("/profile")

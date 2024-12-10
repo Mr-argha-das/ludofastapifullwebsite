@@ -1,6 +1,4 @@
-#!/bin/sh
-'''exec' "/Volumes/Workspace/AV /ludofastapifullwebsite/env/bin/python3.13" "$0" "$@"
-' '''
+#!/Users/ankitsamant/Documents/argha_das/ludo/ludofastapifullwebsite/env/bin/python3.12
 # -*- coding: utf-8 -*-
 import re
 import sys
