@@ -44,7 +44,7 @@
   </head>
   <body class="bg-black font-poppins text-white lg:w-[500px] w-full mx-auto">
     <div
-      class="bg-custom-image bg-cove bg-cente w-full h-screen container mx-auto"
+      class="bg-custom-image bg-cover bg-center w-full h-screen container mx-auto"
     >
       <div
         id="loader"
@@ -54,7 +54,7 @@
         We are finding your opponent...
       </div>
 
-      <div class="flex h-full">
+      <div class="flex justify-center items-center">
         <!-- <div class="ludo-container">
           <div class="ludo">
             <div class="player-pieces">
@@ -86,12 +86,11 @@
         <div class="ludo-container" id="content" style="display: none">
           <div class="w-full flex justify-end">
             <div class="bg-green- flex items-end mb-1 gap-3">
-              <!-- <div class="p-7 bg-white h-10 f rounded-md"></div> -->
               <div
                 class="flex flex-col items-end rounded border-2 border-yellow-500 bg-blue-600 pt-2 px-2"
               >
                 <div class="flex gap-2">
-                  <div class="p-7 w-7 h-7 bg-white f rounded-md"></div>
+                  <div id="p2-dice" class="w-14 h-14 rounded-md"></div>
                   <div class="p-8 w-8 h-8 bg-red-300 rounded-md"></div>
                 </div>
                 <p id="p2-player"></p>
@@ -116,18 +115,19 @@
               <div class="player-base" player-id="P2"></div>
             </div>
           </div>
-          <div class="w-full flex justify-start">
+          <div class="w-full relative flex justify-start">
+            <div
+              id="p1-dice"
+              class="w-14 h-14 rounded-md absolute right-[50%] z-20 bottom-[50%] translate-x-[50%] translate-y-[50%]"
+            ></div>
             <div class="bg-green- flex items-start mt-1 gap-3">
               <div
                 class="flex flex-col items-start rounded border-2 border-yellow-500 bg-blue-600 pt-2 px-2"
               >
                 <div class="flex gap-2">
-                  <div class="p-8 w-8 h-8 bg-red-300 rounded-md" id="p1-dice" style="">
-                    
-                  </div>
-                  <div class="p-7 w-7 h-7 bg-white f rounded-md"></div>
+                  <div class="p-8 w-8 h-8 bg-red-300 rounded-md"></div>
                 </div>
-                <p id = "p1-player"></p>
+                <p id="p1-player"></p>
               </div>
             </div>
           </div>
