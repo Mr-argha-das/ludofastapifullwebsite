@@ -422,21 +422,21 @@ export class Ludo {
         if (data.data_received.message === "next turn") {
           this.turn = data.data_received.nextTurn;
           this.diceValue = data.data_received.diceValue;
-          if (this.yourPlayer === "P2") {
-            const div = document.getElementById("p1-dice");
-            div.style.backgroundImage = `url('${
-              this.diceFace[this.diceValue - 1]
-            }')`;
-            div.style.backgroundSize = "cover"; // Optional: cover the entire div
-            div.style.backgroundPosition = "center";
-          } else {
-            const div = document.getElementById("p2-dice");
-            div.style.backgroundImage = `url('${
-              this.diceFace[this.diceValue - 1]
-            }')`;
-            div.style.backgroundSize = "cover"; // Optional: cover the entire div
-            div.style.backgroundPosition = "center";
-          }
+          // if (this.yourPlayer === "P2") {
+          //   const div = document.getElementById("p1-dice");
+          //   div.style.backgroundImage = `url('${
+          //     this.diceFace[this.diceValue - 1]
+          //   }')`;
+          //   div.style.backgroundSize = "cover"; // Optional: cover the entire div
+          //   div.style.backgroundPosition = "center";
+          // } else {
+          //   const div = document.getElementById("p2-dice");
+          //   div.style.backgroundImage = `url('${
+          //     this.diceFace[this.diceValue - 1]
+          //   }')`;
+          //   div.style.backgroundSize = "cover"; // Optional: cover the entire div
+          //   div.style.backgroundPosition = "center";
+          // }
         } else if (data.data_received.message == "kill") {
           this.turn = data.data_received.nextTurn;
           this.setPiecePosition(
