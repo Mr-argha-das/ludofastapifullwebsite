@@ -34,6 +34,7 @@ export class Ludo {
   _diceValue;
   checkVariable;
   get diceValue() {
+
     return this._diceValue;
   }
   set diceValue(value) {
@@ -47,7 +48,7 @@ export class Ludo {
   }
   set turn(value) {
     this._turn = value;
-    UI.setTurn(value);
+    UI.setTurn(value, this.yourPlayer, this.diceValue);
   }
 
   _state;
@@ -66,17 +67,19 @@ export class Ludo {
 
   constructor() {
     console.log("Hello World! Let's play Ludo!");
-
+    this.yourPlayer = undefined;
+    this.connectWebSocket();
     this.listenDiceClick();
-    this.listenResetClick();
+
     this.listenPieceClick();
 
     this.resetGame();
-    this.connectWebSocket();
-    this.yourPlayer = undefined;
+
+    
 
     // Call the initialization method
     this.init();
+
   }
   init() {
     // Simulating asynchronous variable assignment
@@ -94,6 +97,7 @@ export class Ludo {
 
         // Clear the interval
         clearInterval(this.checkVariable);
+
       }
     }, 1000);
   }
@@ -116,28 +120,23 @@ export class Ludo {
 
     this.checkForEligiblePieces();
     ////////////
-    if (this.yourPlayer !== `P${this.turn + 1}`) {
-      if (this.yourPlayer === "P2") {
-        const div = document.getElementById("p1-dice");
-        div.style.backgroundImage = `url('${
-          this.diceFace[this.diceValue - 1]
-        }')`;
-        div.style.backgroundSize = "cover"; // Optional: cover the entire div
-        div.style.backgroundPosition = "center";
-      } else {
-        const div = document.getElementById("p2-dice");
-        div.style.backgroundImage = `url('${
-          this.diceFace[this.diceValue - 1]
-        }')`;
-        div.style.backgroundSize = "cover"; // Optional: cover the entire div
-        div.style.backgroundPosition = "center";
-      }
-      this.sendDataDiceTurn(this.diceValue, this.turn);
-      // Optional: center the image
-    } else {
-      const div = document.getElementById("p1-dice");
-      div.style.backgroundImage = ``;
-    }
+
+    this.sendDataDiceTurn(this.diceValue, this.turn);
+    // if(this.yourPlayer == `P${this.turn + 1}`){
+        
+    //     const div = document.getElementById("p1-dice");
+    //     div.innerHTML = '';
+    //     div.style.backgroundImage = `url('${
+    //       diceFace[this.diceValue - 1]
+    //     }')`;
+    //     div.style.backgroundSize = "cover"; // Optional: cover the entire div
+    //     div.style.backgroundPosition = "center";
+    //   }
+      
+    //   if(this.yourPlayer != `P${this.turn + 1}` || this.yourPlayer === undefined){
+    //     const div = document.getElementById("p1-dice");
+    //     div.innerHTML = '<p> Wait for opponent move </p>';
+    //   }
   }
 
   checkForEligiblePieces() {
@@ -180,9 +179,6 @@ export class Ludo {
     });
   }
 
-  listenResetClick() {
-    UI.listenResetClick(this.resetGame.bind(this));
-  }
 
   resetGame() {
     console.log("Reset game");
@@ -455,7 +451,7 @@ export class Ludo {
         this.yourPlayer = data.your_player;
         console.log(this.yourPlayer + "======== here is player");
         this.opponentDATA = data.opponent_data;
-
+        this.turn = 0;
         console.log("User Data:", userdata);
         if (this.yourPlayer === "P1") {
           document.getElementById("p1-player").textContent = userdata.name;
@@ -482,17 +478,17 @@ export class Ludo {
     this.piece = dataReceived.piece;
     const data = dataReceived.currentPosition;
     console.log(data);
-    if (this.yourPlayer === "P2") {
-      const div = document.getElementById("p1-dice");
-      div.style.backgroundImage = `url('${this.diceFace[this.diceValue - 1]}')`;
-      div.style.backgroundSize = "cover"; // Optional: cover the entire div
-      div.style.backgroundPosition = "center";
-    } else {
-      const div = document.getElementById("p2-dice");
-      div.style.backgroundImage = `url('${this.diceFace[this.diceValue - 1]}')`;
-      div.style.backgroundSize = "cover"; // Optional: cover the entire div
-      div.style.backgroundPosition = "center";
-    }
+    // if (this.yourPlayer === "P2") {
+    //   const div = document.getElementById("p1-dice");
+    //   div.style.backgroundImage = `url('${this.diceFace[this.diceValue - 1]}')`;
+    //   div.style.backgroundSize = "cover"; // Optional: cover the entire div
+    //   div.style.backgroundPosition = "center";
+    // } else {
+    //   const div = document.getElementById("p2-dice");
+    //   div.style.backgroundImage = `url('${this.diceFace[this.diceValue - 1]}')`;
+    //   div.style.backgroundSize = "cover"; // Optional: cover the entire div
+    //   div.style.backgroundPosition = "center";
+    // }
     this.setPiecePosition(
       `P${dataReceived.nextTurn + 1}`,
       Number(dataReceived.piece),
@@ -523,6 +519,11 @@ export class Ludo {
 
     if (this.socket && this.socket.readyState === WebSocket.OPEN) {
       this.socket.send(JSON.stringify(dataToSend));
+      if(this.yourPlayer !== `P${this.turn + 1}`){
+        const div = document.getElementById("p1-dice");
+        div.innerHTML = '<p> Wait for opponent move </p>';
+        div.style.backgroundImage = "none";
+      }
     } else {
       console.error("WebSocket is not open.");
     }
@@ -539,6 +540,11 @@ export class Ludo {
     try {
       this.socket.send(JSON.stringify(dataToSend));
       console.log("done");
+      if(this.yourPlayer !== `P${this.turn + 1}`){
+        const div = document.getElementById("p1-dice");
+        div.innerHTML = '<p> Wait for opponent move </p>';
+        div.style.backgroundImage = "none";
+      }
     } catch (e) {
       console.log(e);
     }
@@ -555,6 +561,11 @@ export class Ludo {
     try {
       this.socket.send(JSON.stringify(dataToSend));
       console.log("done");
+      if(this.yourPlayer !== `P${this.turn + 1}`){
+        const div = document.getElementById("p1-dice");
+        div.innerHTML = '<p> Wait for opponent move </p>';
+        div.style.backgroundImage = "none";
+      }
     } catch (e) {
       console.log(e);
     }
