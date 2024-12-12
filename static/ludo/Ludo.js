@@ -91,9 +91,18 @@ export class Ludo {
         // Hide loader and show content
         document.getElementById("loader").style.display = "none";
         document.getElementById("content").style.display = "block";
-
+        if (this.yourPlayer === "P1") {
+          const div = document.getElementById("p1-dice");
+          div.style.backgroundImage = `url('${this.diceFace[1]
+            }')`;
+          div.style.backgroundSize = "cover"; // Optional: cover the entire div
+          div.style.backgroundPosition = "center";
+        }else{
+          const div = document.getElementById("p1-dice");
+          div.innerHTML = '<p> Wait for opponents move</P>';
+        }
         // Clear the interval
-        clearInterval(this.checkVariable);
+        clearInterval(this.checkVariable); 1
       }
     }, 1000);
   }
@@ -117,26 +126,16 @@ export class Ludo {
     this.checkForEligiblePieces();
     ////////////
     if (this.yourPlayer !== `P${this.turn + 1}`) {
-      if (this.yourPlayer === "P2") {
-        const div = document.getElementById("p1-dice");
-        div.style.backgroundImage = `url('${
-          this.diceFace[this.diceValue - 1]
-        }')`;
+      const div = document.getElementById("p1-dice");
+        div.style.backgroundImage = `url('${this.diceFace[this.diceValue - 1]
+          }')`;
         div.style.backgroundSize = "cover"; // Optional: cover the entire div
         div.style.backgroundPosition = "center";
-      } else {
-        const div = document.getElementById("p2-dice");
-        div.style.backgroundImage = `url('${
-          this.diceFace[this.diceValue - 1]
-        }')`;
-        div.style.backgroundSize = "cover"; // Optional: cover the entire div
-        div.style.backgroundPosition = "center";
-      }
       this.sendDataDiceTurn(this.diceValue, this.turn);
       // Optional: center the image
     } else {
       const div = document.getElementById("p1-dice");
-      div.style.backgroundImage = ``;
+          div.innerHTML = '<p> Wait for opponents move</P>';
     }
   }
 
@@ -422,28 +421,37 @@ export class Ludo {
         if (data.data_received.message === "next turn") {
           this.turn = data.data_received.nextTurn;
           this.diceValue = data.data_received.diceValue;
-          if (this.yourPlayer === "P2") {
+          if (this.yourPlayer !== `P${this.turn + 1}`) {
             const div = document.getElementById("p1-dice");
-            div.style.backgroundImage = `url('${
-              this.diceFace[this.diceValue - 1]
-            }')`;
-            div.style.backgroundSize = "cover"; // Optional: cover the entire div
-            div.style.backgroundPosition = "center";
+              div.style.backgroundImage = `url('${this.diceFace[this.diceValue - 1]
+                }')`;
+              div.style.backgroundSize = "cover"; // Optional: cover the entire div
+              div.style.backgroundPosition = "center";
+            this.sendDataDiceTurn(this.diceValue, this.turn);
+            // Optional: center the image
           } else {
-            const div = document.getElementById("p2-dice");
-            div.style.backgroundImage = `url('${
-              this.diceFace[this.diceValue - 1]
-            }')`;
-            div.style.backgroundSize = "cover"; // Optional: cover the entire div
-            div.style.backgroundPosition = "center";
+            const div = document.getElementById("p1-dice");
+                div.innerHTML = '<p> Wait for opponents move</P>';
           }
         } else if (data.data_received.message == "kill") {
           this.turn = data.data_received.nextTurn;
+          if (this.yourPlayer !== `P${this.turn + 1}`) {
+            const div = document.getElementById("p1-dice");
+              div.style.backgroundImage = `url('${this.diceFace[this.diceValue - 1]
+                }')`;
+              div.style.backgroundSize = "cover"; // Optional: cover the entire div
+              div.style.backgroundPosition = "center";
+            this.sendDataDiceTurn(this.diceValue, this.turn);
+            // Optional: center the image
+          } else {
+            const div = document.getElementById("p1-dice");
+                div.innerHTML = '<p> Wait for opponents move</P>';
+          }
           this.setPiecePosition(
             data.data_received.opponent,
             Number(data.data_received.opponentPiece),
             BASE_POSITIONS[data.data_received.opponent][
-              Number(data.data_received.opponentPiece)
+            Number(data.data_received.opponentPiece)
             ]
           );
         } else {
@@ -482,16 +490,17 @@ export class Ludo {
     this.piece = dataReceived.piece;
     const data = dataReceived.currentPosition;
     console.log(data);
-    if (this.yourPlayer === "P2") {
+    if (this.yourPlayer !== `P${this.turn + 1}`) {
       const div = document.getElementById("p1-dice");
-      div.style.backgroundImage = `url('${this.diceFace[this.diceValue - 1]}')`;
-      div.style.backgroundSize = "cover"; // Optional: cover the entire div
-      div.style.backgroundPosition = "center";
+        div.style.backgroundImage = `url('${this.diceFace[this.diceValue - 1]
+          }')`;
+        div.style.backgroundSize = "cover"; // Optional: cover the entire div
+        div.style.backgroundPosition = "center";
+      this.sendDataDiceTurn(this.diceValue, this.turn);
+      // Optional: center the image
     } else {
-      const div = document.getElementById("p2-dice");
-      div.style.backgroundImage = `url('${this.diceFace[this.diceValue - 1]}')`;
-      div.style.backgroundSize = "cover"; // Optional: cover the entire div
-      div.style.backgroundPosition = "center";
+      const div = document.getElementById("p1-dice");
+          div.innerHTML = '<p> Wait for opponents move</P>';
     }
     this.setPiecePosition(
       `P${dataReceived.nextTurn + 1}`,
