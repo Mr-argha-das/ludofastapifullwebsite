@@ -75,7 +75,7 @@ export class Ludo {
 
     this.resetGame();
 
-    
+
 
     // Call the initialization method
     this.init();
@@ -113,7 +113,20 @@ export class Ludo {
       console.log("It is not your turn to roll the dice.");
       return;
     }
-
+    const startTime = Date.now();
+    const div = document.getElementById("p1-dice");
+      div.innerHTML = '';
+      div.style.backgroundImage = 'none';
+      // div.style.backgroundImage =  "url('../static/dice/dice-game.gif')";
+      // div.style.backgroundSize = "cover"; // Optional: cover the entire div
+      // div.style.backgroundPosition = "center";
+    while (Date.now() - startTime < 3000) {
+        // Simulate some blocking work (this will freeze the browser for 3 seconds)
+        console.log("Working...");
+        console.log("2 seconds passed!");
+      
+    }
+    
     console.log("Dice clicked!");
     this.diceValue = 1 + Math.floor(Math.random() * 6);
     this.state = STATE.DICE_ROLLED;
@@ -123,7 +136,7 @@ export class Ludo {
 
     this.sendDataDiceTurn(this.diceValue, this.turn);
     // if(this.yourPlayer == `P${this.turn + 1}`){
-        
+
     //     const div = document.getElementById("p1-dice");
     //     div.innerHTML = '';
     //     div.style.backgroundImage = `url('${
@@ -132,7 +145,7 @@ export class Ludo {
     //     div.style.backgroundSize = "cover"; // Optional: cover the entire div
     //     div.style.backgroundPosition = "center";
     //   }
-      
+
     //   if(this.yourPlayer != `P${this.turn + 1}` || this.yourPlayer === undefined){
     //     const div = document.getElementById("p1-dice");
     //     div.innerHTML = '<p> Wait for opponent move </p>';
@@ -439,7 +452,7 @@ export class Ludo {
             data.data_received.opponent,
             Number(data.data_received.opponentPiece),
             BASE_POSITIONS[data.data_received.opponent][
-              Number(data.data_received.opponentPiece)
+            Number(data.data_received.opponentPiece)
             ]
           );
         } else {
@@ -519,7 +532,7 @@ export class Ludo {
 
     if (this.socket && this.socket.readyState === WebSocket.OPEN) {
       this.socket.send(JSON.stringify(dataToSend));
-      if(this.yourPlayer !== `P${this.turn + 1}`){
+      if (this.yourPlayer !== `P${this.turn + 1}`) {
         const div = document.getElementById("p1-dice");
         div.innerHTML = '<p> Wait for opponent move </p>';
         div.style.backgroundImage = "none";
@@ -540,7 +553,7 @@ export class Ludo {
     try {
       this.socket.send(JSON.stringify(dataToSend));
       console.log("done");
-      if(this.yourPlayer !== `P${this.turn + 1}`){
+      if (this.yourPlayer !== `P${this.turn + 1}`) {
         const div = document.getElementById("p1-dice");
         div.innerHTML = '<p> Wait for opponent move </p>';
         div.style.backgroundImage = "none";
@@ -561,7 +574,7 @@ export class Ludo {
     try {
       this.socket.send(JSON.stringify(dataToSend));
       console.log("done");
-      if(this.yourPlayer !== `P${this.turn + 1}`){
+      if (this.yourPlayer !== `P${this.turn + 1}`) {
         const div = document.getElementById("p1-dice");
         div.innerHTML = '<p> Wait for opponent move </p>';
         div.style.backgroundImage = "none";
