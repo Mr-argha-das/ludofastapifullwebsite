@@ -115,7 +115,6 @@ export class Ludo {
     div.style.backgroundSize = "cover"; // Optional: cover the entire div
     div.style.backgroundPosition = "center";
 
-    console.log("Dice clicked!");
     let randomValue;
 
     // 70% chance for 6, 30% chance for other values
@@ -134,7 +133,6 @@ export class Ludo {
   }
 
   checkForEligiblePieces() {
-    console.log("2");
     const player = PLAYERS[this.turn];
     const eligiblePieces = this.getEligiblePieces(player);
     if (eligiblePieces.length) {
@@ -145,13 +143,11 @@ export class Ludo {
   }
 
   incrementTurn() {
-    console.log("3");
     this.turn = this.turn === 0 ? 1 : 0;
     this.state = STATE.DICE_NOT_ROLLED;
   }
 
   getEligiblePieces(player) {
-    console.log("4");
     return [0, 1, 2, 3].filter((piece) => {
       const currentPosition = this.currentPositions[player][piece];
       if (currentPosition === HOME_POSITIONS[player]) {
@@ -174,7 +170,6 @@ export class Ludo {
   }
 
   resetGame() {
-    console.log("Reset game");
     this.currentPositions = structuredClone(BASE_POSITIONS);
 
     PLAYERS.forEach((player) => {
@@ -192,12 +187,10 @@ export class Ludo {
   }
 
   listenPieceClick() {
-    console.log("5");
     UI.listenPieceClick(this.onPieceClick.bind(this));
   }
 
   onPieceClick(event) {
-    console.log("6.0");
     const target = event.target;
     if (
       !target.classList.contains("player-piece") ||

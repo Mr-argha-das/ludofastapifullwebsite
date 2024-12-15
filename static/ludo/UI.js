@@ -56,9 +56,7 @@ export class UI {
     document
       .querySelector(`[player-id="${player}"].player-base`)
       .classList.add("highlight");
-    console.log(`UI === ${player}`);
 
-    console.log(dicevalue);
     let diceFace = [
       "../static/dice/dice1.png",
       "../static/dice/dice2.png",
@@ -67,7 +65,6 @@ export class UI {
       "../static/dice/dice5.png",
       "../static/dice/dice6.png",
     ];
-    console.log(yourPlayer + "================== :) " + player);
     if (yourPlayer === player && yourPlayer !== undefined) {
       const div = document.getElementById("p1-dice");
       div.innerHTML = "";
@@ -129,7 +126,6 @@ export class UI {
     setTimeout(() => {
       gifContainer.style.backgroundImage = "none";
     }, 3000);
-    console.log(yourPlayer + "==========" + `P${turn + 1}`);
     if (yourPlayer === `P${turn + 1}`) {
       const div = document.getElementById("p1-dice");
       div.innerHTML = "";
