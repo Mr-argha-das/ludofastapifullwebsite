@@ -112,6 +112,12 @@ export class UI {
   }
 
   static setDiceValue(value, yourPlayer, turn) {
+    const div = document.getElementById("p1-dice");
+    div.style.backgroundImage = "none";
+    div.innerHTML = "";
+    div.style.backgroundImage = "url('../static/dice/dice-game.gif');";
+    div.style.backgroundSize = "cover"; // Optional: cover the entire div
+    div.style.backgroundPosition = "center";
     let diceFace = [
       "../static/dice/dice1.png",
       "../static/dice/dice2.png",
@@ -120,6 +126,9 @@ export class UI {
       "../static/dice/dice5.png",
       "../static/dice/dice6.png",
     ];
+    setTimeout(() => {
+      gifContainer.style.backgroundImage = "none";
+    }, 3000);
     console.log(yourPlayer + "==========" + `P${turn + 1}`);
     if (yourPlayer === `P${turn + 1}`) {
       const div = document.getElementById("p1-dice");

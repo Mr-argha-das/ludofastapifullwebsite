@@ -108,10 +108,10 @@ export class Ludo {
       console.log("It is not your turn to roll the dice.");
       return;
     }
-
+    console.log("dice clicked test");
     const div = document.getElementById("p1-dice");
     div.innerHTML = "";
-    div.style.backgroundImage = "url('../static/dice/dice-game.gif');";
+    div.style.backgroundImage = `url('../static/dice/dice-game.gif')`;
     div.style.backgroundSize = "cover"; // Optional: cover the entire div
     div.style.backgroundPosition = "center";
 
@@ -124,7 +124,6 @@ export class Ludo {
     } else {
       randomValue = 1 + Math.floor(Math.random() * 5); // 30% chance for 1 to 5
     }
-
     this.diceValue = randomValue;
     this.state = STATE.DICE_ROLLED;
 
