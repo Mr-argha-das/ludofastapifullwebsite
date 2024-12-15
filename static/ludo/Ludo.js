@@ -34,12 +34,11 @@ export class Ludo {
   _diceValue;
   checkVariable;
   get diceValue() {
-
     return this._diceValue;
   }
   set diceValue(value) {
     this._diceValue = value;
-    UI.setDiceValue(value);
+    UI.setDiceValue(value, this.yourPlayer, this.turn);
   }
 
   _turn;
@@ -75,11 +74,8 @@ export class Ludo {
 
     this.resetGame();
 
-
-
     // Call the initialization method
     this.init();
-
   }
   init() {
     // Simulating asynchronous variable assignment
@@ -97,7 +93,6 @@ export class Ludo {
 
         // Clear the interval
         clearInterval(this.checkVariable);
-
       }
     }, 1000);
   }
@@ -113,28 +108,32 @@ export class Ludo {
       console.log("It is not your turn to roll the dice.");
       return;
     }
-    const startTime = Date.now();
+
     const div = document.getElementById("p1-dice");
-      div.innerHTML = '';
-      div.style.backgroundImage = 'none';
-      // div.style.backgroundImage =  "url('../static/dice/dice-game.gif')";
-      // div.style.backgroundSize = "cover"; // Optional: cover the entire div
-      // div.style.backgroundPosition = "center";
-    while (Date.now() - startTime < 3000) {
-        // Simulate some blocking work (this will freeze the browser for 3 seconds)
-        console.log("Working...");
-        console.log("2 seconds passed!");
-      
-    }
-    
+    div.innerHTML = "";
+    div.style.backgroundImage = "url('../static/dice/dice-game.gif');";
+    div.style.backgroundSize = "cover"; // Optional: cover the entire div
+    div.style.backgroundPosition = "center";
+    setTimeout(function () {
+      console.log("Code stopped");
+    }, 1000);
     console.log("Dice clicked!");
-    this.diceValue = 1 + Math.floor(Math.random() * 6);
+    let randomValue;
+
+    // 70% chance for 6, 30% chance for other values
+    if (Math.random() < 0.7) {
+      randomValue = 6; // 70% chance
+    } else {
+      randomValue = 1 + Math.floor(Math.random() * 5); // 30% chance for 1 to 5
+    }
+
+    this.diceValue = randomValue;
     this.state = STATE.DICE_ROLLED;
 
     this.checkForEligiblePieces();
-    ////////////
-
-    this.sendDataDiceTurn(this.diceValue, this.turn);
+    if (this.diceValue !== 6) {
+      this.sendDataDiceTurn(this.diceValue, this.turn);
+    }
     // if(this.yourPlayer == `P${this.turn + 1}`){
 
     //     const div = document.getElementById("p1-dice");
@@ -191,7 +190,6 @@ export class Ludo {
       return true;
     });
   }
-
 
   resetGame() {
     console.log("Reset game");
@@ -452,7 +450,7 @@ export class Ludo {
             data.data_received.opponent,
             Number(data.data_received.opponentPiece),
             BASE_POSITIONS[data.data_received.opponent][
-            Number(data.data_received.opponentPiece)
+              Number(data.data_received.opponentPiece)
             ]
           );
         } else {
@@ -534,7 +532,7 @@ export class Ludo {
       this.socket.send(JSON.stringify(dataToSend));
       if (this.yourPlayer !== `P${this.turn + 1}`) {
         const div = document.getElementById("p1-dice");
-        div.innerHTML = '<p> Wait for opponent move </p>';
+        div.innerHTML = "<p> Wait for opponent move </p>";
         div.style.backgroundImage = "none";
       }
     } else {
@@ -555,8 +553,8 @@ export class Ludo {
       console.log("done");
       if (this.yourPlayer !== `P${this.turn + 1}`) {
         const div = document.getElementById("p1-dice");
-        div.innerHTML = '<p> Wait for opponent move </p>';
         div.style.backgroundImage = "none";
+        div.innerHTML = "<p> Wait for opponent move </p>";
       }
     } catch (e) {
       console.log(e);
@@ -576,7 +574,7 @@ export class Ludo {
       console.log("done");
       if (this.yourPlayer !== `P${this.turn + 1}`) {
         const div = document.getElementById("p1-dice");
-        div.innerHTML = '<p> Wait for opponent move </p>';
+        div.innerHTML = "<p> Wait for opponent move </p>";
         div.style.backgroundImage = "none";
       }
     } catch (e) {

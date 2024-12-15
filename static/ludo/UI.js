@@ -11,8 +11,6 @@ export class UI {
     diceButtonElement.addEventListener("click", callback);
   }
 
-
-
   static listenPieceClick(callback) {
     document
       .querySelector(".player-pieces")
@@ -49,7 +47,6 @@ export class UI {
     const player = PLAYERS[index];
 
     // Display player ID
-  
 
     const activePlayerBase = document.querySelector(".player-base.highlight");
     if (activePlayerBase) {
@@ -59,33 +56,33 @@ export class UI {
     document
       .querySelector(`[player-id="${player}"].player-base`)
       .classList.add("highlight");
-      console.log(`UI === ${player}`);
+    console.log(`UI === ${player}`);
 
-      console.log(dicevalue);
-      let diceFace = [
-        "../static/dice/dice1.png",
-        "../static/dice/dice2.png",
-        "../static/dice/dice3.png",
-        "../static/dice/dice4.png",
-        "../static/dice/dice5.png",
-        "../static/dice/dice6.png",
-      ];
-      console.log(yourPlayer + "================== :) " + player);
-      if(yourPlayer == player && yourPlayer !== undefined){
-        
-        const div = document.getElementById("p1-dice");
-        div.innerHTML = '';
-        div.style.backgroundImage = `url('${
-          diceFace[dicevalue === undefined ? 0: dicevalue - 1]
-        }')`;
-        div.style.backgroundSize = "cover"; // Optional: cover the entire div
-        div.style.backgroundPosition = "center";
-      }
-      
-      if(yourPlayer != player && yourPlayer === undefined){
-        const div = document.getElementById("p1-dice");
-        div.innerHTML = '<p> Wait for opponent move </p>';
-      }
+    console.log(dicevalue);
+    let diceFace = [
+      "../static/dice/dice1.png",
+      "../static/dice/dice2.png",
+      "../static/dice/dice3.png",
+      "../static/dice/dice4.png",
+      "../static/dice/dice5.png",
+      "../static/dice/dice6.png",
+    ];
+    console.log(yourPlayer + "================== :) " + player);
+    if (yourPlayer === player && yourPlayer !== undefined) {
+      const div = document.getElementById("p1-dice");
+      div.innerHTML = "";
+      div.style.backgroundImage = `url('${
+        diceFace[dicevalue === undefined ? 0 : dicevalue - 1]
+      }')`;
+      div.style.backgroundSize = "cover"; // Optional: cover the entire div
+      div.style.backgroundPosition = "center";
+    }
+
+    if (yourPlayer !== player && yourPlayer === undefined) {
+      const div = document.getElementById("p1-dice");
+      div.style.backgroundImage = "none";
+      div.innerHTML = "<p> Wait for opponent move </p>";
+    }
   }
 
   static enableDice() {
@@ -114,7 +111,7 @@ export class UI {
     });
   }
 
-  static setDiceValue(value) {
+  static setDiceValue(value, yourPlayer, turn) {
     let diceFace = [
       "../static/dice/dice1.png",
       "../static/dice/dice2.png",
@@ -123,14 +120,18 @@ export class UI {
       "../static/dice/dice5.png",
       "../static/dice/dice6.png",
     ];
- 
-    const div = document.getElementById("p1-dice");
-        div.innerHTML = '';
-        div.style.backgroundImage = `url('${
-          diceFace[value-1]
-        }')`;
-        div.style.backgroundSize = "cover"; // Optional: cover the entire div
-        div.style.backgroundPosition = "center";
+    console.log(yourPlayer + "==========" + `P${turn + 1}`);
+    if (yourPlayer === `P${turn + 1}`) {
+      const div = document.getElementById("p1-dice");
+      div.innerHTML = "";
+      div.style.backgroundImage = `url('${diceFace[value - 1]}')`;
+      div.style.backgroundSize = "cover"; // Optional: cover the entire div
+      div.style.backgroundPosition = "center";
+    } else {
+      const div = document.getElementById("p1-dice");
+      div.style.backgroundImage = "none";
+      div.innerHTML = "<p> Wait for opponent move </p>";
+    }
   }
 }
 
