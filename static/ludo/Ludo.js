@@ -114,9 +114,7 @@ export class Ludo {
     div.style.backgroundImage = "url('../static/dice/dice-game.gif');";
     div.style.backgroundSize = "cover"; // Optional: cover the entire div
     div.style.backgroundPosition = "center";
-    setTimeout(function () {
-      console.log("Code stopped");
-    }, 1000);
+
     console.log("Dice clicked!");
     let randomValue;
 
@@ -134,21 +132,6 @@ export class Ludo {
     if (this.diceValue !== 6) {
       this.sendDataDiceTurn(this.diceValue, this.turn);
     }
-    // if(this.yourPlayer == `P${this.turn + 1}`){
-
-    //     const div = document.getElementById("p1-dice");
-    //     div.innerHTML = '';
-    //     div.style.backgroundImage = `url('${
-    //       diceFace[this.diceValue - 1]
-    //     }')`;
-    //     div.style.backgroundSize = "cover"; // Optional: cover the entire div
-    //     div.style.backgroundPosition = "center";
-    //   }
-
-    //   if(this.yourPlayer != `P${this.turn + 1}` || this.yourPlayer === undefined){
-    //     const div = document.getElementById("p1-dice");
-    //     div.innerHTML = '<p> Wait for opponent move </p>';
-    //   }
   }
 
   checkForEligiblePieces() {
