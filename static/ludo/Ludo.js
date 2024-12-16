@@ -105,38 +105,33 @@ export class Ludo {
   listenDiceClick() {
     UI.listenDiceClick(this.onDiceClick.bind(this));
   }
-
-  onDiceClick() {
+  wait(ms) {
+    return new Promise(resolve => setTimeout(resolve, ms));
+  }
+  async onDiceClick() {
     console.log("1");
     if (this.yourPlayer !== `P${this.turn + 1}`) {
       console.log(`${this.yourPlayer} == P${this.turn + 1}`);
       console.log("It is not your turn to roll the dice.");
       return;
     }
-    const startTime = Date.now();
     const div = document.getElementById("p1-dice");
-      div.innerHTML = '';
-      div.style.backgroundImage = 'none';
-      // div.style.backgroundImage =  "url('../static/dice/dice-game.gif')";
-      // div.style.backgroundSize = "cover"; // Optional: cover the entire div
-      // div.style.backgroundPosition = "center";
-    while (Date.now() - startTime < 3000) {
-        // Simulate some blocking work (this will freeze the browser for 3 seconds)
-        console.log("Working...");
-        console.log("2 seconds passed!");
-      
-    }
-    
+    div.innerHTML = '';
+    div.style.backgroundImage = 'none';
+    div.style.backgroundImage =  `url('../static/dice/dice-game.gif')`;
+    div.style.backgroundSize = "cover"; // Optional: cover the entire div
+    div.style.backgroundPosition = "center";
+    //../static/dice/dice-game.gif
+    await this.wait(1500);
     console.log("Dice clicked!");
     this.diceValue = 1 + Math.floor(Math.random() * 6);
     this.state = STATE.DICE_ROLLED;
-
+   
     this.checkForEligiblePieces();
     ////////////
 
     this.sendDataDiceTurn(this.diceValue, this.turn);
     // if(this.yourPlayer == `P${this.turn + 1}`){
-
     //     const div = document.getElementById("p1-dice");
     //     div.innerHTML = '';
     //     div.style.backgroundImage = `url('${
@@ -152,13 +147,14 @@ export class Ludo {
     //   }
   }
 
-  checkForEligiblePieces() {
+  async checkForEligiblePieces() {
     console.log("2");
     const player = PLAYERS[this.turn];
     const eligiblePieces = this.getEligiblePieces(player);
     if (eligiblePieces.length) {
       UI.highlightPieces(player, eligiblePieces);
     } else {
+      
       this.incrementTurn();
     }
   }
@@ -464,7 +460,6 @@ export class Ludo {
         this.yourPlayer = data.your_player;
         console.log(this.yourPlayer + "======== here is player");
         this.opponentDATA = data.opponent_data;
-        this.turn = 0;
         console.log("User Data:", userdata);
         if (this.yourPlayer === "P1") {
           document.getElementById("p1-player").textContent = userdata.name;

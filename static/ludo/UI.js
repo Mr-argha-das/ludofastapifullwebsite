@@ -134,7 +134,7 @@ export class UI {
   }
 }
 
-// UI.setPiecePosition('P1', 0, 0);
+// UI.setPiecePosition('P1', 0, 0)
 // UI.setTurn(0);
 // UI.setTurn(1);
 
