@@ -505,11 +505,6 @@ export class Ludo {
 
     if (this.socket && this.socket.readyState === WebSocket.OPEN) {
       this.socket.send(JSON.stringify(dataToSend));
-      if (this.yourPlayer !== `P${this.turn + 1}`) {
-        const div = document.getElementById("p1-dice");
-        div.innerHTML = "<p> Wait for opponent move </p>";
-        div.style.backgroundImage = "none";
-      }
     } else {
       console.error("WebSocket is not open.");
     }
@@ -526,11 +521,7 @@ export class Ludo {
     try {
       this.socket.send(JSON.stringify(dataToSend));
       console.log("done");
-      if (this.yourPlayer !== `P${this.turn + 1}`) {
-        const div = document.getElementById("p1-dice");
-        div.style.backgroundImage = "none";
-        div.innerHTML = "<p> Wait for opponent move </p>";
-      }
+      
     } catch (e) {
       console.log(e);
     }
@@ -547,11 +538,7 @@ export class Ludo {
     try {
       this.socket.send(JSON.stringify(dataToSend));
       console.log("done");
-      if (this.yourPlayer !== `P${this.turn + 1}`) {
-        const div = document.getElementById("p1-dice");
-        div.innerHTML = "<p> Wait for opponent move </p>";
-        div.style.backgroundImage = "none";
-      }
+      
     } catch (e) {
       console.log(e);
     }
