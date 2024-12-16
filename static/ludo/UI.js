@@ -119,6 +119,7 @@ export class UI {
   }
 
   static setDiceValue(value, yourPlayer, turn) {
+    let logicbool = false;
     let blueFace = [
       "../static/dice/blue/dice1.png",
       "../static/dice/blue/dice2.png",
@@ -135,9 +136,7 @@ export class UI {
       "../static/dice/green/dice5.png",
       "../static/dice/green/dice6.png",
     ];
-    // setTimeout(() => {
-    //   gifContainer.style.backgroundImage = "none";
-    // }, 3000);
+
     if (yourPlayer === "P1") {
       const div = document.getElementById("p1-dice");
       div.innerHTML = "";

@@ -109,14 +109,7 @@ export class Ludo {
       return;
     }
     console.log("dice clicked test");
-    const div = document.getElementById("p1-dice");
-    div.innerHTML = "";
-    div.style.backgroundImage = `url('../static/dice/dice-game.gif')`;
-    div.style.backgroundSize = "cover"; // Optional: cover the entire div
-    div.style.backgroundPosition = "center";
-
     let randomValue;
-
     // 70% chance for 6, 30% chance for other values
     if (Math.random() < 0.7) {
       randomValue = 6; // 70% chance
@@ -127,9 +120,7 @@ export class Ludo {
     this.state = STATE.DICE_ROLLED;
 
     this.checkForEligiblePieces();
-    if (this.diceValue !== 6) {
-      this.sendDataDiceTurn(this.diceValue, this.turn);
-    }
+    this.sendDataDiceTurn(this.diceValue, this.turn);
   }
 
   checkForEligiblePieces() {
@@ -263,6 +254,7 @@ export class Ludo {
           //// put here winere api
           alert(`Player: ${player} has won!`);
           if (this.yourPlayer === player) {
+            /// call here winner api
             /// i win
             // this.sendWiningDAta()
           } else {
@@ -521,7 +513,6 @@ export class Ludo {
     try {
       this.socket.send(JSON.stringify(dataToSend));
       console.log("done");
-      
     } catch (e) {
       console.log(e);
     }
@@ -538,7 +529,6 @@ export class Ludo {
     try {
       this.socket.send(JSON.stringify(dataToSend));
       console.log("done");
-      
     } catch (e) {
       console.log(e);
     }
