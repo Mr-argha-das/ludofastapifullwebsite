@@ -60,32 +60,40 @@ export class UI {
       .querySelector(`[player-id="${player}"].player-base`)
       .classList.add("highlight");
       console.log(`UI === ${player}`);
+    let blueFace = [
+      "../static/dice/blue/dice1.png",
+      "../static/dice/blue/dice2.png",
+      "../static/dice/blue/dice3.png",
+      "../static/dice/blue/dice4.png",
+      "../static/dice/blue/dice5.png",
+      "../static/dice/blue/dice6.png",
+    ];
+    let greenFace = [
+      "../static/dice/green/dice1.png",
+      "../static/dice/green/dice2.png",
+      "../static/dice/green/dice3.png",
+      "../static/dice/green/dice4.png",
+      "../static/dice/green/dice5.png",
+      "../static/dice/green/dice6.png",
+    ];
+    if (yourPlayer === "P1" && yourPlayer !== undefined) {
+      const div = document.getElementById("p1-dice");
+      div.innerHTML = "";
+      div.style.backgroundImage = `url('${
+        blueFace[dicevalue === undefined ? 0 : dicevalue - 1]
+      }')`;
+      div.style.backgroundSize = "cover"; // Optional: cover the entire div
+      div.style.backgroundPosition = "center";
+    } else {
+      const div = document.getElementById("p1-dice");
+      div.innerHTML = "";
+      div.style.backgroundImage = `url('${
+        greenFace[dicevalue === undefined ? 0 : dicevalue - 1]
+      }')`;
+      div.style.backgroundSize = "cover"; // Optional: cover the entire div
+      div.style.backgroundPosition = "center";
+    }
 
-      console.log(dicevalue);
-      let diceFace = [
-        "../static/dice/dice1.png",
-        "../static/dice/dice2.png",
-        "../static/dice/dice3.png",
-        "../static/dice/dice4.png",
-        "../static/dice/dice5.png",
-        "../static/dice/dice6.png",
-      ];
-      console.log(yourPlayer + "================== :) " + player);
-      if(yourPlayer == player && yourPlayer !== undefined){
-        
-        const div = document.getElementById("p1-dice");
-        div.innerHTML = '';
-        div.style.backgroundImage = `url('${
-          diceFace[dicevalue === undefined ? 0: dicevalue - 1]
-        }')`;
-        div.style.backgroundSize = "cover"; // Optional: cover the entire div
-        div.style.backgroundPosition = "center";
-      }
-      
-      if(yourPlayer != player && yourPlayer === undefined){
-        const div = document.getElementById("p1-dice");
-        div.innerHTML = '<p> Wait for opponent move </p>';
-      }
   }
 
   static enableDice() {
@@ -114,23 +122,39 @@ export class UI {
     });
   }
 
-  static setDiceValue(value) {
-    let diceFace = [
-      "../static/dice/dice1.png",
-      "../static/dice/dice2.png",
-      "../static/dice/dice3.png",
-      "../static/dice/dice4.png",
-      "../static/dice/dice5.png",
-      "../static/dice/dice6.png",
+
+  static setDiceValue(value, yourPlayer, turn) {
+    let logicbool = false;
+    let blueFace = [
+      "../static/dice/blue/dice1.png",
+      "../static/dice/blue/dice2.png",
+      "../static/dice/blue/dice3.png",
+      "../static/dice/blue/dice4.png",
+      "../static/dice/blue/dice5.png",
+      "../static/dice/blue/dice6.png",
     ];
- 
-    const div = document.getElementById("p1-dice");
-        div.innerHTML = '';
-        div.style.backgroundImage = `url('${
-          diceFace[value-1]
-        }')`;
-        div.style.backgroundSize = "cover"; // Optional: cover the entire div
-        div.style.backgroundPosition = "center";
+    let greenFace = [
+      "../static/dice/green/dice1.png",
+      "../static/dice/green/dice2.png",
+      "../static/dice/green/dice3.png",
+      "../static/dice/green/dice4.png",
+      "../static/dice/green/dice5.png",
+      "../static/dice/green/dice6.png",
+    ];
+
+    if (yourPlayer === "P1") {
+      const div = document.getElementById("p1-dice");
+      div.innerHTML = "";
+      div.style.backgroundImage = `url('${blueFace[value - 1]}')`;
+      div.style.backgroundSize = "cover"; // Optional: cover the entire div
+      div.style.backgroundPosition = "center";
+    } else {
+      const div = document.getElementById("p1-dice");
+      div.innerHTML = "";
+      div.style.backgroundImage = `url('${greenFace[value - 1]}')`;
+      div.style.backgroundSize = "cover"; // Optional: cover the entire div
+      div.style.backgroundPosition = "center";
+    }
   }
 }
 

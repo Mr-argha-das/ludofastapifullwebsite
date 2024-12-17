@@ -115,36 +115,23 @@ export class Ludo {
       console.log("It is not your turn to roll the dice.");
       return;
     }
-    const div = document.getElementById("p1-dice");
-    div.innerHTML = '';
-    div.style.backgroundImage = 'none';
-    div.style.backgroundImage =  `url('../static/dice/dice-game.gif')`;
-    div.style.backgroundSize = "cover"; // Optional: cover the entire div
-    div.style.backgroundPosition = "center";
-    //../static/dice/dice-game.gif
-    await this.wait(1500);
-    console.log("Dice clicked!");
-    this.diceValue = 1 + Math.floor(Math.random() * 6);
+
+    console.log("dice clicked test");
+    let randomValue;
+    // 70% chance for 6, 30% chance for other values
+    if (Math.random() < 0.7) {
+      randomValue = 6; // 70% chance
+    } else {
+      randomValue = 1 + Math.floor(Math.random() * 5); // 30% chance for 1 to 5
+    }
+    this.diceValue = randomValue;
+
     this.state = STATE.DICE_ROLLED;
    
     this.checkForEligiblePieces();
-    ////////////
+
 
     this.sendDataDiceTurn(this.diceValue, this.turn);
-    // if(this.yourPlayer == `P${this.turn + 1}`){
-    //     const div = document.getElementById("p1-dice");
-    //     div.innerHTML = '';
-    //     div.style.backgroundImage = `url('${
-    //       diceFace[this.diceValue - 1]
-    //     }')`;
-    //     div.style.backgroundSize = "cover"; // Optional: cover the entire div
-    //     div.style.backgroundPosition = "center";
-    //   }
-
-    //   if(this.yourPlayer != `P${this.turn + 1}` || this.yourPlayer === undefined){
-    //     const div = document.getElementById("p1-dice");
-    //     div.innerHTML = '<p> Wait for opponent move </p>';
-    //   }
   }
 
   async checkForEligiblePieces() {
@@ -286,6 +273,7 @@ export class Ludo {
           //// put here winere api
           alert(`Player: ${player} has won!`);
           if (this.yourPlayer === player) {
+            /// call here winner api
             /// i win
             // this.sendWiningDAta()
           } else {
@@ -527,11 +515,7 @@ export class Ludo {
 
     if (this.socket && this.socket.readyState === WebSocket.OPEN) {
       this.socket.send(JSON.stringify(dataToSend));
-      if (this.yourPlayer !== `P${this.turn + 1}`) {
-        const div = document.getElementById("p1-dice");
-        div.innerHTML = '<p> Wait for opponent move </p>';
-        div.style.backgroundImage = "none";
-      }
+
     } else {
       console.error("WebSocket is not open.");
     }
@@ -548,11 +532,6 @@ export class Ludo {
     try {
       this.socket.send(JSON.stringify(dataToSend));
       console.log("done");
-      if (this.yourPlayer !== `P${this.turn + 1}`) {
-        const div = document.getElementById("p1-dice");
-        div.innerHTML = '<p> Wait for opponent move </p>';
-        div.style.backgroundImage = "none";
-      }
     } catch (e) {
       console.log(e);
     }
@@ -569,11 +548,7 @@ export class Ludo {
     try {
       this.socket.send(JSON.stringify(dataToSend));
       console.log("done");
-      if (this.yourPlayer !== `P${this.turn + 1}`) {
-        const div = document.getElementById("p1-dice");
-        div.innerHTML = '<p> Wait for opponent move </p>';
-        div.style.backgroundImage = "none";
-      }
+
     } catch (e) {
       console.log(e);
     }
