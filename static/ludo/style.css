@@ -18,7 +18,7 @@
   height: 100vw;
   max-height: 430px;
 
-  background-image: url("./ludo-bg.jpg");
+  background-image: url("./ludo-bg.png");
   background-size: cover;
   position: relative;
   background-position: center;
@@ -32,7 +32,7 @@
   .ludo-container .ludo {
     height: 400px;
     width: 100%;
-    background-image: url("./ludo-bg.jpg");
+    background-image: url("./ludo-bg.png");
     background-size: contain;
     position: relative;
   }
@@ -46,7 +46,7 @@
   .ludo-container .ludo {
     max-height: 100%;
     width: 100%;
-    background-image: url("./ludo-bg.jpg");
+    background-image: url("./ludo-bg.png");
     background-size: contain;
     position: relative;
   }
@@ -59,7 +59,7 @@
   .ludo-container .ludo {
     height: 290px;
     width: 100%;
-    background-image: url("./ludo-bg.jpg");
+    background-image: url("./ludo-bg.png");
     background-size: contain;
     position: relative;
   }

@@ -127,7 +127,7 @@ export class Ludo {
     this.diceValue = randomValue;
 
     this.state = STATE.DICE_ROLLED;
-   
+
     this.checkForEligiblePieces();
 
 
@@ -141,7 +141,7 @@ export class Ludo {
     if (eligiblePieces.length) {
       UI.highlightPieces(player, eligiblePieces);
     } else {
-      
+
       this.incrementTurn();
     }
   }
@@ -259,7 +259,26 @@ export class Ludo {
       );
     }
   }
+  async postWinner() {
+    const url = "/api/post-winer"
+      + "?winerId=6757e8fa7d8ca4039e424f39"
+      + "&loserId=6742033128a4cbd5751b9755"
+      + "&price=674c9ab791db6f9df1db2cbf";
+    try {
+      const response = await fetch(url, {
+        method: "POST",
+        headers: {
+          "accept": "application/json",
+        },
+        body: "", // No data in body since parameters are passed in the URL
+      });
 
+      const result = await response.json();
+      console.log("Response:", result);
+    } catch (error) {
+      console.error("Error calling API:", error);
+    }
+  }
   movePiece(player, piece, moveBy) {
     console.log("8");
     const interval = setInterval(() => {
