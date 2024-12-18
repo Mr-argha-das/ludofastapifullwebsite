@@ -146,7 +146,7 @@ async def send_otp(request: Request, body: OTPRequest):
     message = client.messages.create(
                 from_='+15744440027',
                 body=f'Your Ludo Buddy login code {otp}',
-                to=f'+{phone_number}'
+                to=f'+91{phone_number}'
                 )
     print(message.sid)
     # Here you can integrate with an SMS gateway like Twilio or Firebase to send OTP to user

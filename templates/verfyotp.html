@@ -133,7 +133,10 @@
               window.location.href = "/home"; // Redirect on success
             } else {
               alert(data.message);
-              window.location.href = "/signup";// Show error message
+              if(data.message == "You dont have account register first"){
+                window.location.href = "/signup";// Show error message
+              }
+              
             }
           } catch (error) {
             console.error("Error verifying OTP:", error);

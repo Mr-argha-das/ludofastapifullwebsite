@@ -120,7 +120,8 @@ async def landingPage(request: Request, userid: str, priceid: str):
         }
 @app.get("/deposit")
 async def landingPage(request: Request):
-    return templates.TemplateResponse('deposit.html', {"request": request})
+    user= request.session.get("user")
+    return templates.TemplateResponse('deposit.html', {"request": request, "user": user})
 @app.get("/home")
 async def landingPage(request: Request):
     user= request.session.get("user")

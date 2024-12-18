@@ -1,35 +1,85 @@
 {% extends 'base.html' %} {% block content %}
-
+<style>
+  .custom-text-color {
+    color: black;
+  }
+</style>
 <div
   class="bg-custom-image bg-cover bg-center h-screen flex items-center justify-center w-full px-4"
 >
   <div class="backdrop-blur-lg p-8 rounded-lg shadow-lg w-full">
     <h3 class="uppercase text-center text-2xl font-bold mb-6">Deposit</h3>
 
-    <form action="/api/v1/deposit-amount" method="POST">
-      <div class="mb-4">
-        <label for="amount" class="block text-lg font-medium mb-2"
-          >Amount:</label
-        >
-        <input
-          type="number"
-          id="amount"
-          name="amount"
-          required
-          placeholder="Enter Amount"
-          oninput="calculateGST()"
-          class="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500"
-        />
-      </div>
-
-      <button
-        type="submit"
-        class="w-full py-2 bg-pink-500 text-white font-bold rounded-lg hover:bg-pink-400 transition"
+    <div class="mb-4">
+      <label for="amount" class="block text-lg font-medium mb-2"
+        >Amount:</label
       >
-        Submit
-      </button>
-    </form>
+      <input
+        type="number"
+        id="amount"
+        name="amount"
+        required
+        placeholder="Enter Amount"
+        oninput="calculateGST()"
+        class="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500 custom-text-color"
+      />
+    </div>
+
+    <button
+    id = "payButton"
+      type="submit"
+      class="w-full py-2 bg-pink-500 text-white font-bold rounded-lg hover:bg-pink-400 transition"
+    >
+      Submit
+    </button>
   </div>
 </div>
+<script>
+  document.getElementById("payButton").onclick = async function () {
+    // Fetch the order details from your FastAPI backend
+    var inputValue = document.getElementById('amount').value;
+    const response = await fetch("/api/v1/create-order/", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({ amount: inputValue, currency: "INR", }),
+    });
+    const orderData = await response.json();
 
+    var options = {
+      "key": "rzp_live_o4XEUDdxzgCKM2", // Your Razorpay key
+      "amount": orderData.amount, // Amount in paise
+      "currency": orderData.currency,
+      "order_id": orderData.order_id, // The order ID from FastAPI
+      "handler":  function (response)  {
+        // After successful payment, verify the payment on the server side
+        console.log(response);
+        const verifyResponse =  fetch("/api/v1/verify-payment/", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            razorpay_order_id: response.razorpay_order_id,
+            razorpay_payment_id: response.razorpay_payment_id,
+            razorpay_signature: response.razorpay_signature,
+          }),
+        });
+        window.location.href = "/home";
+      },
+      "prefill": {
+        "name": "{{user.name}}",
+        "email": "{{user.email}}@example.com",
+        "contact": "{{user.email}}"
+      },
+      "theme": {
+        "color": "#F37254"
+      }
+    };
+
+    var rzp1 = new Razorpay(options);
+    rzp1.open();
+  };
+</script>
 {% endblock %}
