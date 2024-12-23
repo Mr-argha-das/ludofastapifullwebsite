@@ -5,6 +5,8 @@ import string
 from dotenv import load_dotenv
 import requests
 
+from login.model.userupi import UserUPITable
+
 load_dotenv()
 RAZORPAY_KEY_ID = os.getenv('RAZORPAY_KEY_ID')
 RAZORPAY_KEY_SECRET = os.getenv('RAZORPAY_KEY_SECRET')
@@ -47,6 +49,7 @@ def createContact(name, phone, userid):
 
 
 def createRozarPayFPA(userid, contactid):
+    findUpiId = UserUPITable.objects(userid=userid).first()
     url = "https://api.razorpay.com/v1/fund_accounts"
     auth_string = f"{RAZORPAY_KEY_ID}:{RAZORPAY_KEY_SECRET}"
     auth_encoded = base64.b64encode(auth_string.encode()).decode()
@@ -60,7 +63,7 @@ def createRozarPayFPA(userid, contactid):
         "contact_id": contactid,
         "account_type": "vpa",
         "vpa": {
-            "address": "hdark@ybl"
+            "address": f"{findUpiId.upiID}"
         }
     }
     
@@ -68,7 +71,7 @@ def createRozarPayFPA(userid, contactid):
     response = requests.post(url, json=payload, headers=headers)
     
     # Handle the response
-    if response.status_code == 200:
+    if response.status_code == 200 or response.status_code == 201:
         print("Data sent successfully!")
         print("Response:", response.json())
     else:

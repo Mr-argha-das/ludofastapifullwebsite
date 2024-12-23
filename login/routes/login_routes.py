@@ -1,5 +1,6 @@
 from fastapi import APIRouter, Request, Depends, HTTPException
 from authlib.integrations.starlette_client import OAuth
+from login.model.userupi import UserUPIModel, UserUPITable
 from starlette.config import Config
 from fastapi.templating import Jinja2Templates
 from fastapi.responses import HTMLResponse, RedirectResponse
@@ -197,6 +198,24 @@ async def verify_otp(request: Request, body: OTPVerifyRequest):
                 "status": False
             }
 
+
+@router.put("/api/update-upi")
+async def updateUPI(body: UserUPIModel):
+    findata = UserUPITable.objects(userid=body.userid).first()
+    if(findata):
+        findata.upiID = body.upiId
+        findata.save()
+        return {
+            "message": "Upi updated succes",
+            "status": True
+        }
+    else:
+        savedata = UserUPITable(**body.dict())
+        savedata.save()
+        return {
+            "message": "Upi id added succes",
+            "status": True
+        }
 @router.get("/api/logout")
 async def logout(request: Request):
     # Clear the session
