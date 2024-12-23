@@ -1,6 +1,6 @@
 import base64
 from http.client import HTTPException
-from fastapi import FastAPI, APIRouter, Form, Request, requests
+from fastapi import FastAPI, APIRouter, Form, Request
 from fastapi.responses import RedirectResponse
 from ludoboard.models.gameall import WithdrawalModel
 from passbook.models.passbook_model import PassbookTable, PassBookBody
@@ -10,6 +10,7 @@ from wallet.wallet_model import WalletTable
 from datetime import datetime
 from pydantic import BaseModel
 import razorpay
+import requests
 router = APIRouter()
 RAZORPAY_KEY_ID = 'rzp_live_o4XEUDdxzgCKM2'
 RAZORPAY_KEY_SECRET = 'WmNIargE6mAhUMczHy6N94dH'
@@ -114,16 +115,17 @@ def create_razorpay_payout(upi_id: str, amount: int):
 
     # Make the POST request to create a payout
     response = requests.post(url, json=payload, headers=headers)
-
-    if response.status_code == 200:
-        return response.json()
-    else:
-        raise HTTPException(status_code=response.status_code, detail=response.json())
+    print(response.json())
+    # if response.status_code == 200:
+    #     return response.json()
+    # else:
+    #     raise HTTPException(status_code=response.status_code, detail=response.json())
 
 
 @router.post("/api/withdrawal")
 async def withdrawal(body: WithdrawalModel):
     wallet = WalletTable.objects.get(userid=body.userid)
+    
     if(body.ammount > 50 and wallet.balance <= body.ammount):
         wallet.balance = wallet.balance - body.ammount
         wallet.save()
@@ -137,15 +139,12 @@ async def withdrawal(body: WithdrawalModel):
 
 @router.post("/send_money/")
 async def send_money(payout_request: PayoutRequest):
-    try:
-        # Call the function to initiate the payout
-        payout_response = create_payout(payout_request.amount, payout_request.upi_id, payout_request.purpose)
-        return {
+    payout_response = create_razorpay_payout( payout_request.upi_id, payout_request.amount)
+    print(payout_response)
+    return {
             "status": "success",
             "payout_id": payout_response["id"],
             "amount": payout_response["amount"],
             "currency": payout_response["currency"],
             "status": payout_response["status"],
         }
-    except Exception as e:
-        raise HTTPException(status_code=500, detail=str(e))

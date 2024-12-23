@@ -200,10 +200,3 @@ async def checkUserBalacnce(request: Request, priceid: str):
         }
 
 
-    else:
-        passbook =PassbookTable(userid=body.userid, title=f"Withdrawal Faild", amount = f"(-) {body.ammount}", cre_date=f"{current_datetime}")
-        passbook.save()
-        return {
-            "message": "Your withdrawal faild",
-            "status": False
-        }
