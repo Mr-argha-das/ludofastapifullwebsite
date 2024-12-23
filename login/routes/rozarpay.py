@@ -5,6 +5,7 @@ import string
 from dotenv import load_dotenv
 import requests
 
+from login.model.userfund import UserFundTable
 from login.model.userupi import UserUPITable
 
 load_dotenv()
@@ -74,6 +75,15 @@ def createRozarPayFPA(userid, contactid):
     if response.status_code == 200 or response.status_code == 201:
         print("Data sent successfully!")
         print("Response:", response.json())
+        responseData = response.json()
+        findUSerfundAccont = UserFundTable.objects(userid=userid).first()
+        if(findUSerfundAccont):
+            findUSerfundAccont.fund_acc_id = responseData["id"]
+            findUSerfundAccont.save()
+        else:
+            savedata = UserFundTable(userid=userid, fund_acc_id=responseData["id"])
+            savedata.save()
+            
     else:
         print(f"Failed to send data. Status code: {response.status_code}")
         print("Error:", response.text)
