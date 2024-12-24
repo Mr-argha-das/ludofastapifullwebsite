@@ -78,10 +78,14 @@ def createRozarPayFPA(userid, contactid):
         responseData = response.json()
         findUSerfundAccont = UserFundTable.objects(userid=userid).first()
         if(findUSerfundAccont):
-            findUSerfundAccont.fund_acc_id = responseData["id"]
-            findUSerfundAccont.save()
+            UserFundTable.objects(userid=userid).update_one(
+        set__userid=userid,
+        set__fund_acc_id=responseData["id"],
+        set__contact_id=contactid,
+        upsert=True  # Ensures the document is created if it doesn't exist
+    )
         else:
-            savedata = UserFundTable(userid=userid, fund_acc_id=responseData["id"])
+            savedata = UserFundTable(userid=userid, fund_acc_id=responseData["id"], contact_id=contactid)
             savedata.save()
             
     else:

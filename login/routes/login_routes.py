@@ -13,7 +13,7 @@ from starlette.middleware.sessions import SessionMiddleware
 
 from wallet.wallet_model import WalletModel, WalletTable
 from bson import ObjectId
-
+from login.routes.rozarpay import createContact
 import random
 from twilio.rest import Client
 # Initialize Firebase Admin SDK with the service account credentials
@@ -200,8 +200,9 @@ async def verify_otp(request: Request, body: OTPVerifyRequest):
 
 
 @router.put("/api/update-upi")
-async def updateUPI(body: UserUPIModel):
-    findata = UserUPITable.objects(userid=body.userid).first()
+async def updateUPI(request: Request, body: UserUPIModel):
+    user= request.session.get("user")
+    findata = UserUPITable.objects(userid=str(user["data"]["_id"]["\u0024oid"])).first()
     if(findata):
         findata.upiID = body.upiId
         findata.save()
@@ -212,12 +213,12 @@ async def updateUPI(body: UserUPIModel):
     else:
         savedata = UserUPITable(**body.dict())
         savedata.save()
+        createContact(str(user["data"]["name"]), str(user["data"]["email"]), str(user["data"]["_id"]["\u0024oid"]))
         return {
             "message": "Upi id added succes",
             "status": True
         }
 @router.get("/api/logout")
 async def logout(request: Request):
-    # Clear the session
     request.session.clear()
     return RedirectResponse(url="/")

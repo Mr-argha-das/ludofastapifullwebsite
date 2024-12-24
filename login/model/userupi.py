@@ -6,5 +6,4 @@ class UserUPITable(Document):
     upiId = StringField(required=True)
     
 class UserUPIModel(BaseModel):
-    userid : str
     upiId : str
